@@ -4,4 +4,7 @@ export default defineConfig({
   test: {
     globals: true,
   },
+  resolve: {
+    tsconfigPaths: true,
+  },
 });
