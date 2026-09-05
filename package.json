@@ -30,8 +30,11 @@
     "axios": "^1.20.0"
   },
   "devDependencies": {
+    "@rocketseat/eslint-config": "^2.2.2",
     "@types/node": "^26.4.1",
     "@vitest/coverage-v8": "5.0.0",
+    "eslint": "^8",
+    "eslint-plugin-simple-import-sort": "^14.0.0",
     "git-commit-msg-linter": "^5.0.9",
     "husky": "^9.1.7",
     "tsup": "^8.5.1",
