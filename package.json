@@ -10,13 +10,6 @@
   "engines": {
     "node": "24.16.0"
   },
-  "devEngines": {
-    "packageManager": {
-      "name": "pnpm",
-      "version": "^11.9.0",
-      "onFail": "download"
-    }
-  },
   "scripts": {
     "build": "tsup --tsconfig tsconfig.build.json src/main.ts",
     "start:dev": "tsx watch src/main.ts",
