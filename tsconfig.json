@@ -10,8 +10,7 @@
     ],
     "module": "nodenext",
     "target": "es2024",
-    "types": ["node"],
-
+    "types": ["node", "vitest/globals"],
     "strict": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
