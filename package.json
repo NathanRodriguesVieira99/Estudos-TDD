@@ -1,6 +1,6 @@
 {
   "name": "estudos-tdd-ts",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "",
   "type": "module",
   "main": "src/main.ts",
@@ -19,7 +19,7 @@
     "test:cov": "vitest run --coverage",
     "lint:fix": "eslint src/*.ts --fix",
     "db:migrate": "node --env-file=.env.dev ./node_modules/knex/bin/cli.js migrate:latest",
-    "db:rollback":"node --env-file=.env.dev ./node_modules/knex/bin/cli.js migrate:rollback",
+    "db:rollback": "node --env-file=.env.dev ./node_modules/knex/bin/cli.js migrate:rollback",
     "prepare": "husky"
   },
   "dependencies": {
