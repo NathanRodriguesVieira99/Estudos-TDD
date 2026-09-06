@@ -1,4 +1,6 @@
-## 0.1.0 (2026-09-06)
+## [0.1.1](https://github.com/NathanRodriguesVieira99/Estudos-TDD/compare/v0.1.0...v0.1.1) (2026-09-06)
+
+## [0.1.0](https://github.com/NathanRodriguesVieira99/Estudos-TDD/compare/0383597c18d790c80c89f97589f3da83f4a05734...v0.1.0) (2026-09-06)
 
 
 ### Features
