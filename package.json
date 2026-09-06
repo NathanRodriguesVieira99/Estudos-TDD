@@ -34,6 +34,8 @@
     "@types/cors": "^2.8.19",
     "@types/express": "^5.0.6",
     "@types/node": "^26.4.1",
+    "@typescript-eslint/eslint-plugin": "^8.69.0",
+    "@typescript-eslint/parser": "^8.69.0",
     "@vitest/coverage-v8": "5.0.0",
     "eslint": "^8",
     "eslint-plugin-simple-import-sort": "^14.0.0",
@@ -43,7 +45,7 @@
     "lint-staged": "^17.5.0",
     "tsup": "^8.5.1",
     "tsx": "^4.23.13",
-    "typescript": "^7.0.2",
+    "typescript": "^6.0.3",
     "vitest": "^5.0.0"
   }
 }
