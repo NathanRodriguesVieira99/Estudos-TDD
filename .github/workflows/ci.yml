@@ -8,6 +8,20 @@ on:
 permissions:
   contents: write
 
+##
+# Versionamento Semântico:
+#
+# O primeiro valor é a Major, que indica que ocorreu um 'Breaking Change',ou seja, a atualizacao se torna incompatível com outras versões.
+# Em resumo são atualizações com potencial de 'quebrar' códigos que utilizam versões anteriores.
+# Ex: 1.0.0 => 2.0.0
+#
+# O segundo valor é a Minor, que informa a versão da feature, onde uma nova feature ou melhoria é adicionada sem problemas de compatibilidade.
+# Ex: 2.0.0 => 2.1.0
+#
+# O terceiro valor é o Patch, que informa sobre correções de bugs, melhorias de desempenho ou alterações semelhantes que não alteram nem e nem adicionam novas features.
+# Ex: 2.1.0 => 2.1.1
+#
+##
 jobs:
   generate-version:
     runs-on: ubuntu-latest
