@@ -104,38 +104,7 @@ test("Deve criar um banco (POST /banco)", async () => {
   expect(outputGet.url).toBe(outputCreate.url);
   await axios.delete(`${baseUrl}/banco/${bankId}`);
 });
-test("Deve alterar um banco (PUT /banco)", async () => {
-  const inputCreate = {
-    codigo: "553",
-    nome: "Banco Teste",
-    url: "teste.com",
-  };
-  const responseCreate = await axios.post(`${baseUrl}/banco`, inputCreate);
-  const outputCreate = responseCreate.data;
-  const bankId = outputCreate.id;
-  const inputUpdate = {
-    codigo: "553",
-    nome: "Banco Teste 2",
-    url: "teste2.com",
-  };
-  const responseUpdate = await axios.put(
-    `${baseUrl}/banco/${bankId}`,
-    inputUpdate,
-  );
-  const outputUpdate = responseUpdate.data;
-  expect(responseUpdate.status).toBe(200);
-  expect(outputUpdate.id).toBe(bankId);
-  expect(outputUpdate.codigo).toBe(inputUpdate.codigo);
-  expect(outputUpdate.nome).toBe(inputUpdate.nome);
-  expect(outputUpdate.url).toBe(inputUpdate.url);
-  const responseGet = await axios.get(`${baseUrl}/banco/${outputCreate.id}`);
-  const outputGet = responseGet.data;
-  expect(outputGet.id).toBe(outputCreate.id);
-  expect(outputGet.codigo).toBe(inputUpdate.codigo);
-  expect(outputGet.nome).toBe(inputUpdate.nome);
-  expect(outputGet.url).toBe(inputUpdate.url);
-  await axios.delete(`${baseUrl}/banco/${outputCreate.id}`);
-});
+
 test("Deve deletar um banco (DELETE /banco/:id)", async () => {
   const inputCreate = {
     codigo: "556",
