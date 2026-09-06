@@ -9,11 +9,12 @@
     "skipLibCheck": true,
     "useDefineForClassFields": true,
     "noEmit": true,
+    "noImplicitAny": false,
     "allowImportingTsExtensions": true,
     "paths": {
       "@/*": ["./src/*"]
     }
   },
-  "include": ["src", "test"],
+  "include": ["./"],
   "exclude": ["node_modules", "dist"]
 }

@@ -20,12 +20,19 @@
     "lint:fix": "eslint src/*.ts --fix",
     "db:migrate": "node --env-file=.env.dev ./node_modules/knex/bin/cli.js migrate:latest",
     "db:rollback": "node --env-file=.env.dev ./node_modules/knex/bin/cli.js migrate:rollback",
+    "docker:up": "docker compose up -d",
+    "docker:stop": "docker compose stop",
     "prepare": "husky"
   },
   "dependencies": {
-    "axios": "^1.20.0"
+    "axios": "^1.20.0",
+    "cors": "^2.8.6",
+    "express": "^5.2.1",
+    "mysql2": "^3.24.3"
   },
   "devDependencies": {
+    "@types/cors": "^2.8.19",
+    "@types/express": "^5.0.6",
     "@types/node": "^26.4.1",
     "@vitest/coverage-v8": "5.0.0",
     "eslint": "^8",
@@ -34,7 +41,6 @@
     "husky": "^9.1.7",
     "knex": "^3.3.0",
     "lint-staged": "^17.5.0",
-    "mysql2": "^3.24.3",
     "tsup": "^8.5.1",
     "tsx": "^4.23.13",
     "typescript": "^7.0.2",
