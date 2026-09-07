@@ -2,7 +2,7 @@ import cors from "cors";
 import express, { type Request, type Response } from "express";
 
 import { BankDAO } from "./bank.dao.ts";
-import { updateBank } from "./update-bank.ts";
+import { UpdateBankUseCase } from "./update-bank.usecase.ts";
 
 const app = express();
 
@@ -55,7 +55,8 @@ app.put("/banco/:id", async (request: Request, response: Response) => {
     id: Number(bankId),
     ...bankData,
   };
-  const output = await updateBank(input);
+  const useCase = new UpdateBankUseCase(bankDAO);
+  const output = await useCase.execute(input);
   response.status(200).json(output);
 });
 
