@@ -1,7 +1,7 @@
 import cors from "cors";
 import express, { type Request, type Response } from "express";
 
-import { BankDAO } from "./bank.dao.ts";
+import { BankDAODatabase } from "./bank.dao-database.ts";
 import { UpdateBankUseCase } from "./update-bank.usecase.ts";
 
 const app = express();
@@ -9,7 +9,7 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
-const bankDAO = new BankDAO();
+const bankDAO = new BankDAODatabase();
 
 app.get("/banco", async (request: Request, response: Response) => {
   const rows = await bankDAO.list();
