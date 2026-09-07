@@ -1,3 +1,5 @@
+## [0.2.3](https://github.com/NathanRodriguesVieira99/Estudos-TDD/compare/v0.2.2...v0.2.3) (2026-09-07)
+
 ## [0.2.2](https://github.com/NathanRodriguesVieira99/Estudos-TDD/compare/v0.2.1...v0.2.2) (2026-09-07)
 
 ## [0.2.1](https://github.com/NathanRodriguesVieira99/Estudos-TDD/compare/v0.2.0...v0.2.1) (2026-09-06)
@@ -17,12 +19,4 @@
 * remove rocketseat ESLint config package ([5b877cf](https://github.com/NathanRodriguesVieira99/Estudos-TDD/commit/5b877cfef39429fa2a801126b1a6ace47aff0551))
 
 ## [0.1.1](https://github.com/NathanRodriguesVieira99/Estudos-TDD/compare/v0.1.0...v0.1.1) (2026-09-06)
-
-## [0.1.0](https://github.com/NathanRodriguesVieira99/Estudos-TDD/compare/0383597c18d790c80c89f97589f3da83f4a05734...v0.1.0) (2026-09-06)
-
-
-### Features
-
-* add .nvmrc to fix NodeJs version ([0383597](https://github.com/NathanRodriguesVieira99/Estudos-TDD/commit/0383597c18d790c80c89f97589f3da83f4a05734))
-* setup husky and git-commit-msg-linter ([e0f8a8a](https://github.com/NathanRodriguesVieira99/Estudos-TDD/commit/e0f8a8a3e8e4fbbb97bb1765d61809fc9ed933e3))
 
