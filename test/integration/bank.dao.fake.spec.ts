@@ -1,9 +1,11 @@
-import { BankDAODatabase } from "@/bank.dao-database.ts";
+import { type BankDAO } from "@/bank.dao-database.ts";
 
-let bankDAO: BankDAODatabase;
+import { BankDAOFake } from "../mocks/bank.dao.fake.ts";
+
+let bankDAO: BankDAO;
 
 beforeAll(() => {
-  bankDAO = new BankDAODatabase();
+  bankDAO = new BankDAOFake();
 });
 
 test("Deve testar o acesso ao banco", async () => {
