@@ -31,9 +31,9 @@ test("Deve alterar um banco", async () => {
   expect(outputUpdate.url).toBe(inputUpdate.url);
   const outputGet = await bankDAO.getById(bankId);
   expect(outputGet).toBeTruthy();
-  expect(outputGet.BANCO_ID).toBe(bankId);
-  expect(outputGet.CODIGO).toBe(inputUpdate.codigo);
-  expect(outputGet.NOME).toBe(inputUpdate.nome);
-  expect(outputGet.URL).toBe(inputUpdate.url);
+  expect(outputGet?.BANCO_ID).toBe(bankId);
+  expect(outputGet?.CODIGO).toBe(inputUpdate.codigo);
+  expect(outputGet?.NOME).toBe(inputUpdate.nome);
+  expect(outputGet?.URL).toBe(inputUpdate.url);
   await bankDAO.remove(bankId);
 });

@@ -2,6 +2,7 @@ import cors from "cors";
 import express, { type Request, type Response } from "express";
 
 import { BankDAODatabase } from "./bank.dao-database.ts";
+import { GetBankListUseCase } from "./get-bank-list.usecase.ts";
 import { UpdateBankUseCase } from "./update-bank.usecase.ts";
 
 const app = express();
@@ -12,13 +13,8 @@ app.use(cors());
 const bankDAO = new BankDAODatabase();
 
 app.get("/banco", async (request: Request, response: Response) => {
-  const rows = await bankDAO.list();
-  const output = rows.map((row) => ({
-    id: row.BANCO_ID,
-    codigo: row.CODIGO,
-    nome: row.NOME,
-    url: row.URL,
-  }));
+  const useCase = new GetBankListUseCase(bankDAO);
+  const output = await useCase.execute();
   response.status(200).json(output);
 });
 

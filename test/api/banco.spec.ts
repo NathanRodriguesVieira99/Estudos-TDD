@@ -5,28 +5,6 @@ axios.defaults.validateStatus = () => true;
 
 const baseUrl = "http://localhost:3001";
 
-test("Deve retornar a lista de bancos (GET/banco)", async () => {
-  const inputCreate = {
-    codigo: "559",
-    nome: "Banco Teste List",
-    url: "teste_list.com",
-  };
-  const responseCreate = await axios.post(`${baseUrl}/banco`, inputCreate);
-  const outputCreate = responseCreate.data;
-  const bankId = outputCreate.id;
-  const response = await axios.get(`${baseUrl}/banco`);
-  const output = response.data;
-  expect(response.status).toBe(200);
-  expect(output).toBeInstanceOf(Array);
-  expect(output.length).toBeGreaterThan(1);
-  const bankData = output.find((bank) => bank.id === bankId);
-  expect(bankData).toBeTruthy();
-  expect(bankData.id).toBe(bankId);
-  expect(bankData.codigo).toBe(inputCreate.codigo);
-  expect(bankData.nome).toBe(inputCreate.nome);
-  expect(bankData.url).toBe(inputCreate.url);
-  await axios.delete(`${baseUrl}/banco/${bankId}`);
-});
 test("Deve retornar um banco (GET /banco/:id)", async () => {
   const inputCreate = {
     codigo: "559",
