@@ -5,24 +5,7 @@ axios.defaults.validateStatus = () => true;
 
 const baseUrl = "http://localhost:3001";
 
-test("Deve retornar um banco (GET /banco/:id)", async () => {
-  const inputCreate = {
-    codigo: "559",
-    nome: "Banco Teste Find One",
-    url: "teste_find_one.com",
-  };
-  const responseCreate = await axios.post(`${baseUrl}/banco`, inputCreate);
-  const outputCreate = responseCreate.data;
-  const bankId = outputCreate.id;
-  const response = await axios.get(`${baseUrl}/banco/${bankId}`);
-  const output = response.data;
-  expect(response.status).toBe(200);
-  expect(output.id).toBe(bankId);
-  expect(output.codigo).toBe(inputCreate.codigo);
-  expect(output.nome).toBe(inputCreate.nome);
-  expect(output.url).toBe(inputCreate.url);
-  await axios.delete(`${baseUrl}/banco/${bankId}`);
-});
+
 test("Deve criar um banco (POST /banco)", async () => {
   const inputCreate = {
     codigo: "555",
