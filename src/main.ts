@@ -22,7 +22,7 @@ app.get("/banco", async (request: Request, response: Response) => {
 });
 
 app.get("/banco/:id", async (request: Request, response: Response) => {
-  const bankId = request.params.id;
+  const bankId = Number(request.params.id);
   const input = { id: bankId };
   const useCase = new GetBankByIdUseCase(bankDAO);
   const output = await useCase.execute(input);
