@@ -13,9 +13,9 @@ beforeAll(() => {
 
 test("Deve alterar um banco", async () => {
   const inputCreate = {
-    CODIGO: "553",
-    NOME: "Banco Teste",
-    URL: "teste.com",
+    codigo: "553",
+    nome: "Banco Teste",
+    url: "teste.com",
   };
   const bankId = await bankDAO.save(inputCreate);
   const inputUpdate = {

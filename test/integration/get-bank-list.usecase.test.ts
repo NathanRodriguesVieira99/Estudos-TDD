@@ -11,7 +11,7 @@ beforeAll(() => {
   sut = new GetBankListUseCase(bankDAO);
 });
 
-test("Deve retornar a lista de bancos (GET/banco)", async () => {
+test("Deve retornar a lista de bancos", async () => {
   const inputCreate = {
     codigo: "559",
     nome: "Banco Teste List",
