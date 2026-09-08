@@ -2,6 +2,7 @@ import cors from "cors";
 import express, { type Request, type Response } from "express";
 
 import { BankDAODatabase } from "./bank.dao-database.ts";
+import { CreateBankUseCase } from "./create-bank.usecase.ts";
 import { GetBankByIdUseCase } from "./get-bank-by-id.usecase.ts";
 import { GetBankListUseCase } from "./get-bank-list.usecase.ts";
 import { UpdateBankUseCase } from "./update-bank.usecase.ts";
@@ -29,13 +30,10 @@ app.get("/banco/:id", async (request: Request, response: Response) => {
 });
 
 app.post("/banco", async (request: Request, response: Response) => {
-  const bankData = request.body;
-  const bankId = await bankDAO.save(bankData);
-  const bank = {
-    id: bankId,
-    ...bankData,
-  };
-  response.status(201).json(bank);
+  const input = request.body;
+  const useCase = new CreateBankUseCase(bankDAO);
+  const output = await useCase.execute(input);
+  response.status(201).json(output);
 });
 
 app.put("/banco/:id", async (request: Request, response: Response) => {

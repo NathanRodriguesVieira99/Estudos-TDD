@@ -1,0 +1,37 @@
+import type { BankDAO } from "@/bank.dao-database.ts";
+import { CreateBankUseCase } from "@/create-bank.usecase.ts";
+import { GetBankByIdUseCase } from "@/get-bank-by-id.usecase.ts";
+
+import { BankDAOFake } from "../mocks/bank.dao.fake.ts";
+
+let bankDAO: BankDAO;
+let getBankByIdUseCase: GetBankByIdUseCase;
+let sut: CreateBankUseCase;
+
+beforeAll(() => {
+  bankDAO = new BankDAOFake();
+  getBankByIdUseCase = new GetBankByIdUseCase(bankDAO);
+  sut = new CreateBankUseCase(bankDAO);
+});
+
+test("Deve criar um banco", async () => {
+  const inputSut = {
+    codigo: "555",
+    nome: "Banco Teste",
+    url: "teste.com",
+  };
+  const outputCreate = await sut.execute(inputSut);
+  expect(outputCreate.id).toBeTruthy();
+  expect(outputCreate.codigo).toBe(inputSut.codigo);
+  expect(outputCreate.nome).toBe(inputSut.nome);
+  expect(outputCreate.url).toBe(inputSut.url);
+  const inputGet = {
+    id: outputCreate.id,
+  };
+  const outputGet = await getBankByIdUseCase.execute(inputGet);
+  expect(outputGet.id).toBe(outputCreate.id);
+  expect(outputGet.codigo).toBe(outputCreate.codigo);
+  expect(outputGet.nome).toBe(outputCreate.nome);
+  expect(outputGet.url).toBe(outputCreate.url);
+  await bankDAO.remove(outputCreate.id);
+});
