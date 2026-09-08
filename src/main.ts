@@ -50,7 +50,7 @@ app.put("/banco/:id", async (request: Request, response: Response) => {
 });
 
 app.delete("/banco/:id", async (request: Request, response: Response) => {
-  const bankId = request.params.id;
+  const bankId = Number(request.params.id);
   const useCase = new RemoveBankUseCase(bankDAO);
   const input = {
     id: bankId,
