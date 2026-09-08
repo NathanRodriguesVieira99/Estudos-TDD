@@ -1,3 +1,10 @@
+## [0.2.7](https://github.com/NathanRodriguesVieira99/Estudos-TDD/compare/v0.2.6...v0.2.7) (2026-09-08)
+
+
+### Bug Fixes
+
+* **bank:** update creation input values to fix typescript error and format output on usecase ([e9a7f25](https://github.com/NathanRodriguesVieira99/Estudos-TDD/commit/e9a7f2564bd1822cb6b9b9af06088c84d7a37c55))
+
 ## [0.2.6](https://github.com/NathanRodriguesVieira99/Estudos-TDD/compare/v0.2.5...v0.2.6) (2026-09-07)
 
 ## [0.2.5](https://github.com/NathanRodriguesVieira99/Estudos-TDD/compare/v0.2.4...v0.2.5) (2026-09-07)
@@ -5,6 +12,4 @@
 ## [0.2.4](https://github.com/NathanRodriguesVieira99/Estudos-TDD/compare/v0.2.3...v0.2.4) (2026-09-07)
 
 ## [0.2.3](https://github.com/NathanRodriguesVieira99/Estudos-TDD/compare/v0.2.2...v0.2.3) (2026-09-07)
-
-## [0.2.2](https://github.com/NathanRodriguesVieira99/Estudos-TDD/compare/v0.2.1...v0.2.2) (2026-09-07)
 
