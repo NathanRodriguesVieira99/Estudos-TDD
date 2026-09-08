@@ -5,6 +5,7 @@ import { BankDAODatabase } from "./bank.dao-database.ts";
 import { CreateBankUseCase } from "./create-bank.usecase.ts";
 import { GetBankByIdUseCase } from "./get-bank-by-id.usecase.ts";
 import { GetBankListUseCase } from "./get-bank-list.usecase.ts";
+import { RemoveBankUseCase } from "./remove-bank.usecase.ts";
 import { UpdateBankUseCase } from "./update-bank.usecase.ts";
 
 const app = express();
@@ -50,7 +51,11 @@ app.put("/banco/:id", async (request: Request, response: Response) => {
 
 app.delete("/banco/:id", async (request: Request, response: Response) => {
   const bankId = request.params.id;
-  await bankDAO.remove(Number(bankId));
+  const useCase = new RemoveBankUseCase(bankDAO);
+  const input = {
+    id: bankId,
+  };
+  await useCase.execute(input);
   response.status(200).end();
 });
 
