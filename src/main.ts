@@ -39,9 +39,9 @@ app.post("/banco", async (request: Request, response: Response) => {
 
 app.put("/banco/:id", async (request: Request, response: Response) => {
   const bankData = request.body;
-  const bankId = request.params.id;
+  const bankId = Number(request.params.id);
   const input = {
-    id: Number(bankId),
+    id: bankId,
     ...bankData,
   };
   const useCase = new UpdateBankUseCase(bankDAO);
