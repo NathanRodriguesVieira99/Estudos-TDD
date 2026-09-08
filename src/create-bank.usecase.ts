@@ -1,9 +1,27 @@
 import type { BankDAO } from "./bank.dao-database.ts";
+import type { UseCase } from "./useCase.ts";
 
-export class CreateBankUseCase {
+export namespace CreateBank {
+  export type Input = {
+    codigo: string;
+    nome: string;
+    url: string;
+  };
+  export type Output = {
+    id: number;
+    codigo: string;
+    nome: string;
+    url: string;
+  };
+}
+
+export class CreateBankUseCase implements UseCase<
+  CreateBank.Input,
+  CreateBank.Output
+> {
   constructor(private readonly bankDAO: BankDAO) {}
 
-  async execute(input: any): Promise<any> {
+  async execute(input: CreateBank.Input): Promise<CreateBank.Output> {
     const bankId = await this.bankDAO.save(input);
     const output = {
       id: bankId,
