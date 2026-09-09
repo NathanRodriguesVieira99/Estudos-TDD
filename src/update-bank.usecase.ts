@@ -23,8 +23,12 @@ export class UpdateBankUseCase implements UseCase<
   constructor(private readonly bankDAO: BankDAO) {}
 
   async execute(input: UpdateBank.Input): Promise<UpdateBank.Output> {
-    if (!input.nome || !input.nome.match(/^.+\s.+$/)) {
-      throw new Error("Nome inválido");
+    if (!input.nome) throw new Error("Nome inválido");
+    if (!input.nome.match(/^.+\s.+$/)) throw new Error("Nome inválido");
+    if (!input.codigo) throw new Error("Código inválido");
+    if (input.codigo.length !== 3) throw new Error("Código inválido");
+    if (input.codigo.replace(/\D/g, "").length !== 3) {
+      throw new Error("Código inválido");
     }
     const row = await this.bankDAO.getById(input.id);
     const output = {

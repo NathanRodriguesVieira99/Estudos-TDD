@@ -39,7 +39,7 @@ describe("UpdateBank UseCase", () => {
     await bankDAO.remove(bankId);
   });
   test.each(["", null, undefined, "Teste"])(
-    "Não deve alterar um banco com nome inválido %s",
+    "Não deve alterar um banco com nome inválido: %s",
     async (invalidName: any) => {
       const inputCreate = {
         codigo: "553",
@@ -54,6 +54,25 @@ describe("UpdateBank UseCase", () => {
         url: "teste2.com",
       };
       await expect(sut.execute(inputUpdate)).rejects.toThrow("Nome inválido");
+      await bankDAO.remove(bankId);
+    },
+  );
+  test.each(["", null, undefined, "String", "1", "01"])(
+    "Não deve alterar um banco com código inválido: %s",
+    async (invalidCode: any) => {
+      const inputCreate = {
+        codigo: "553",
+        nome: "Banco Teste",
+        url: "teste.com",
+      };
+      const bankId = await bankDAO.save(inputCreate);
+      const inputUpdate = {
+        id: bankId,
+        codigo: invalidCode,
+        nome: "Banco Teste 2",
+        url: "teste2.com",
+      };
+      await expect(sut.execute(inputUpdate)).rejects.toThrow("Código inválido");
       await bankDAO.remove(bankId);
     },
   );
