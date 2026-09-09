@@ -1,3 +1,5 @@
+import { faker } from "@faker-js/faker";
+
 import type { BankDAO } from "@/bank.dao-database.ts";
 import { CreateBankUseCase } from "@/create-bank.usecase.ts";
 import { GetBankByIdUseCase } from "@/get-bank-by-id.usecase.ts";
@@ -8,7 +10,7 @@ let bankDAO: BankDAO;
 let getBankByIdUseCase: GetBankByIdUseCase;
 let sut: CreateBankUseCase;
 
-beforeAll(() => {
+beforeEach(() => {
   bankDAO = new BankDAOFake();
   getBankByIdUseCase = new GetBankByIdUseCase(bankDAO);
   sut = new CreateBankUseCase(bankDAO);
@@ -16,8 +18,9 @@ beforeAll(() => {
 
 describe("CreateBank UseCase", () => {
   test("Deve criar um banco", async () => {
+    const fakeCode = faker.string.numeric(3);
     const inputSut = {
-      codigo: "555",
+      codigo: fakeCode,
       nome: "Banco Teste",
       url: "teste.com",
     };
@@ -58,4 +61,17 @@ describe("CreateBank UseCase", () => {
       await expect(sut.execute(inputCreate)).rejects.toThrow("Código inválido");
     },
   );
+  test("Não deve criar um banco com código repetido", async () => {
+    const fakeCode = faker.string.numeric(3);
+    const inputCreate = {
+      codigo: fakeCode,
+      nome: "Teste Silva",
+      url: "teste.com",
+    };
+    const { id } = await sut.execute(inputCreate);
+    await expect(sut.execute(inputCreate)).rejects.toThrow(
+      "Já existe um banco com este código",
+    );
+    await bankDAO.remove(id);
+  });
 });

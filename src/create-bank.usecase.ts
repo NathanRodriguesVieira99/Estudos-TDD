@@ -29,6 +29,10 @@ export class CreateBankUseCase implements UseCase<
     if (input.codigo.replace(/\D/g, "").length !== 3) {
       throw new Error("Código inválido");
     }
+    const alreadyExistsWithCode = await this.bankDAO.getByCode(input.codigo);
+    if (alreadyExistsWithCode) {
+      throw new Error("Já existe um banco com este código");
+    }
     const bankId = await this.bankDAO.save(input);
     const output = {
       id: bankId,

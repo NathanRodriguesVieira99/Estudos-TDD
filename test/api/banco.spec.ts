@@ -1,3 +1,4 @@
+import { faker } from "@faker-js/faker";
 import axios from "axios";
 
 /* O Axios por default, lança um erro quando não recebe um status 200, esse trecho de código desabilita isso. */
@@ -7,8 +8,9 @@ const baseUrl = "http://localhost:3001";
 
 describe("GET /banco", () => {
   test("Deve retornar a lista de bancos", async () => {
+    const fakeCode = faker.string.numeric(3);
     const inputCreate = {
-      codigo: "559",
+      codigo: fakeCode,
       nome: "Banco Teste List",
       url: "teste_list.com",
     };
@@ -31,8 +33,9 @@ describe("GET /banco", () => {
 });
 describe("GET /banco/:id", () => {
   test("Deve retornar um banco", async () => {
+    const fakeCode = faker.string.numeric(3);
     const inputCreate = {
-      codigo: "559",
+      codigo: fakeCode,
       nome: "Banco Teste Find One",
       url: "teste_find_one.com",
     };
@@ -51,14 +54,16 @@ describe("GET /banco/:id", () => {
 });
 describe("POST /banco", () => {
   test("Deve criar um banco", async () => {
+    const fakeCode = faker.string.numeric(3);
     const inputCreate = {
-      codigo: "555",
+      codigo: fakeCode,
       nome: "Banco Teste",
       url: "teste.com",
     };
     const responseCreate = await axios.post(`${baseUrl}/banco`, inputCreate);
     const outputCreate = responseCreate.data;
     const bankId = outputCreate.id;
+    expect(bankId).toBeTruthy()
     expect(responseCreate.status).toBe(201);
     expect(outputCreate.id).toBeTruthy();
     expect(outputCreate.codigo).toBe(inputCreate.codigo);
@@ -89,8 +94,9 @@ describe("POST /banco", () => {
   test.each([""])(
     "Não deve criar um banco com nome inválido: %s (POST /banco)",
     async (invalidName: any) => {
+      const fakeCode = faker.string.numeric(3);
       const inputCreate = {
-        codigo: "555",
+        codigo: fakeCode,
         nome: invalidName,
         url: "teste.com",
       };
@@ -117,8 +123,9 @@ describe("POST /banco", () => {
 });
 describe("PUT /banco/:id", () => {
   test("Deve alterar um banco", async () => {
+    const fakeCode = faker.string.numeric(3);
     const inputCreate = {
-      codigo: "553",
+      codigo: fakeCode,
       nome: "Banco Teste",
       url: "teste.com",
     };
@@ -126,7 +133,7 @@ describe("PUT /banco/:id", () => {
     const outputCreate = responseCreate.data;
     const bankId = outputCreate.id;
     const inputUpdate = {
-      codigo: "553",
+      codigo: fakeCode,
       nome: "Banco Teste 2",
       url: "teste2.com",
     };
@@ -151,16 +158,9 @@ describe("PUT /banco/:id", () => {
   test.each([""])(
     "Não deve alterar um banco com nome inválido %s",
     async (invalidName: any) => {
-      const inputCreate = {
-        codigo: "553",
-        nome: "Banco Teste",
-        url: "teste.com",
-      };
-      const responseCreate = await axios.post(`${baseUrl}/banco`, inputCreate);
-      const outputCreate = responseCreate.data;
-      const bankId = outputCreate.id;
+      const bankId = 9_999_999;
       const inputUpdate = {
-        codigo: "553",
+        codigo: "777",
         nome: invalidName,
         url: "teste2.com",
       };
@@ -171,14 +171,14 @@ describe("PUT /banco/:id", () => {
       expect(responseUpdate.status).toBe(422);
       const outputUpdate = responseUpdate.data;
       expect(outputUpdate.message).toBe("Nome inválido");
-      await axios.delete(`${baseUrl}/banco/${outputCreate.id}`);
     },
   );
   test.each([""])(
     "Não deve alterar um banco com código inválido %s",
     async (invalidCode: any) => {
+      const fakeCode = faker.string.numeric(3);
       const inputCreate = {
-        codigo: "553",
+        codigo: fakeCode,
         nome: "Banco Teste",
         url: "teste.com",
       };
@@ -218,17 +218,20 @@ describe("PUT /banco/:id", () => {
 });
 describe("DELETE /banco/:id", () => {
   test("Deve deletar um banco", async () => {
+    const fakeCode = faker.string.numeric(3);
     const inputCreate = {
-      codigo: "556",
+      codigo: fakeCode,
       nome: "Banco Teste Delete",
       url: "teste_delete.com",
     };
     const responseCreate = await axios.post(`${baseUrl}/banco`, inputCreate);
     const outputCreate = responseCreate.data;
     const bankId = outputCreate.id;
+    expect(bankId).toBeTruthy();
     const responseDelete = await axios.delete(`${baseUrl}/banco/${bankId}`);
     expect(responseDelete.status).toBe(200);
     const responseGet = await axios.get(`${baseUrl}/banco/${bankId}`);
     expect(responseGet.status).toBe(404);
+    expect(responseGet.data?.id).toBeFalsy();
   });
 });

@@ -1,10 +1,12 @@
 import mysqlConnection from "mysql2/promise";
 
+/* DAO abstrai uma tabela do banco de dados de forma 1:1 */
 export interface BankDAO {
   save(dto: BankDAO.SaveDTO): Promise<number>;
   list(): Promise<BankDAO.BankDTO[]>;
   remove(bankId: number): Promise<void>;
   getById(bankId: number): Promise<BankDAO.BankDTO | undefined>;
+  getByCode(code: string): Promise<BankDAO.BankDTO | undefined>;
   update(dto: BankDAO.UpdateDTO): Promise<void>;
 }
 
@@ -52,6 +54,7 @@ export class BankDAODatabase implements BankDAO {
   }
 
   async remove(bankId: number): Promise<void> {
+    if (isNaN(bankId)) throw new Error("ID do Banco informado é inválido");
     const connection = mysqlConnection.createPool(
       String(process.env.DATABASE_URL),
     );
@@ -68,6 +71,19 @@ export class BankDAODatabase implements BankDAO {
     const [rows] = await connection.query<any[]>(
       `SELECT * FROM BANCO WHERE BANCO_ID = ? LIMIT 1`,
       [bankId],
+    );
+    const [firstRow] = rows;
+    connection.pool.end();
+    return firstRow;
+  }
+
+  async getByCode(code: string): Promise<BankDAO.BankDTO | undefined> {
+    const connection = mysqlConnection.createPool(
+      String(process.env.DATABASE_URL),
+    );
+    const [rows] = await connection.query<any[]>(
+      `SELECT * FROM BANCO WHERE CODIGO = ? LIMIT 1`,
+      [code],
     );
     const [firstRow] = rows;
     connection.pool.end();
