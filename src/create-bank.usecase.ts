@@ -22,8 +22,12 @@ export class CreateBankUseCase implements UseCase<
   constructor(private readonly bankDAO: BankDAO) {}
 
   async execute(input: CreateBank.Input): Promise<CreateBank.Output> {
-    if (!input.nome || !input.nome.match(/^.+\s.+$/)) {
-      throw new Error("Nome inválido");
+    if (!input.nome) throw new Error("Nome inválido");
+    if (!input.nome.match(/^.+\s.+$/)) throw new Error("Nome inválido");
+    if (!input.codigo) throw new Error("Código inválido");
+    if (input.codigo.length !== 3) throw new Error("Código inválido");
+    if (input.codigo.replace(/\D/g, "").length !== 3) {
+      throw new Error("Código inválido");
     }
     const bankId = await this.bankDAO.save(input);
     const output = {

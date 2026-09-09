@@ -36,7 +36,6 @@ describe("CreateBank UseCase", () => {
     expect(outputGet?.url).toBe(outputCreate.url);
     await bankDAO.remove(outputCreate.id);
   });
-
   test.each(["", null, undefined, "Teste"])(
     "Não deve criar um banco com nome inválido: %s",
     async (invalidName: any) => {
@@ -46,6 +45,17 @@ describe("CreateBank UseCase", () => {
         url: "teste.com",
       };
       await expect(sut.execute(inputCreate)).rejects.toThrow("Nome inválido");
+    },
+  );
+  test.each(["", null, undefined, "String", "1", "01"])(
+    "Não deve criar um banco com código inválido: %s",
+    async (invalidCode: any) => {
+      const inputCreate = {
+        codigo: invalidCode,
+        nome: "Teste Silva",
+        url: "teste.com",
+      };
+      await expect(sut.execute(inputCreate)).rejects.toThrow("Código inválido");
     },
   );
 });

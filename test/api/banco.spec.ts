@@ -103,6 +103,23 @@ describe("Banco", () => {
         expect(outputCreate.message).toBe("Nome inválido");
       },
     );
+    test.each([""])(
+      "Não deve criar um banco com nome código inválido: %s",
+      async (invalidCode: any) => {
+        const inputCreate = {
+          codigo: invalidCode,
+          nome: "Teste Silva",
+          url: "teste.com",
+        };
+        const responseCreate = await axios.post(
+          `${baseUrl}/banco`,
+          inputCreate,
+        );
+        expect(responseCreate.status).toBe(422);
+        const outputCreate = responseCreate.data;
+        expect(outputCreate.message).toBe("Código inválido");
+      },
+    );
   });
   describe("PUT /banco/:id", () => {
     test("Deve alterar um banco", async () => {
