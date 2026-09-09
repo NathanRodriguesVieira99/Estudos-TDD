@@ -37,7 +37,7 @@ describe("CreateBank UseCase", () => {
     await bankDAO.remove(outputCreate.id);
   });
 
-  test.each([""])(
+  test.each(["", null, undefined, "Teste"])(
     "Não deve criar um banco com nome inválido: %s",
     async (invalidName: any) => {
       const inputCreate = {
