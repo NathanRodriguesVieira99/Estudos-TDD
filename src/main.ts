@@ -44,11 +44,11 @@ app.post("/banco", async (request: Request, response: Response) => {
 app.put("/banco/:id", async (request: Request, response: Response) => {
   const bankData = request.body;
   const bankId = Number(request.params.id);
-  const useCase = new UpdateBankUseCase(bankDAO);
   const input = {
     id: bankId,
     ...bankData,
   };
+  const useCase = new UpdateBankUseCase(bankDAO);
   try {
     const output = await useCase.execute(input);
     return response.status(200).json(output);
