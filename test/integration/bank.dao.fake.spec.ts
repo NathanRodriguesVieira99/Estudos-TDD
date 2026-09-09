@@ -1,6 +1,6 @@
 import { type BankDAO } from "@/bank.dao-database.ts";
 
-import { BankDAOFake } from "../mocks/bank.dao.fake.ts";
+import { BankDAOFake } from "../mocks/fakes/bank.dao.fake.ts";
 
 let bankDAO: BankDAO;
 

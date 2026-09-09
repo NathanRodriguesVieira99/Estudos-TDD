@@ -2,7 +2,7 @@ import type { BankDAO } from "@/bank.dao-database.ts";
 import { CreateBankUseCase } from "@/create-bank.usecase.ts";
 import { GetBankByIdUseCase } from "@/get-bank-by-id.usecase.ts";
 
-import { BankDAOFake } from "../mocks/bank.dao.fake.ts";
+import { BankDAOFake } from "../mocks/fakes/bank.dao.fake.ts";
 
 let bankDAO: BankDAO;
 let getBankByIdUseCase: GetBankByIdUseCase;
