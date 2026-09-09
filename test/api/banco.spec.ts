@@ -1,17 +1,29 @@
 import { faker } from "@faker-js/faker";
 import axios from "axios";
+import mysqlConnection from "mysql2/promise";
 
 /* O Axios por default, lança um erro quando não recebe um status 200, esse trecho de código desabilita isso. */
 axios.defaults.validateStatus = () => true;
 
 const baseUrl = "http://localhost:3001";
 
+const connection = mysqlConnection.createPool(String(process.env.DATABASE_URL));
+
+afterAll(() => {
+  connection.pool.end();
+});
+
 describe("GET /banco", () => {
   test("Deve retornar a lista de bancos", async () => {
     const fakeCode = faker.string.numeric(3);
+    const fakeName = faker.person.fullName();
+    await connection.query(`DELETE FROM BANCO WHERE CODIGO = ? OR NOME = ?`, [
+      fakeCode,
+      fakeName,
+    ]);
     const inputCreate = {
       codigo: fakeCode,
-      nome: "Banco Teste List",
+      nome: fakeName,
       url: "teste_list.com",
     };
     const responseCreate = await axios.post(`${baseUrl}/banco`, inputCreate);
@@ -34,9 +46,14 @@ describe("GET /banco", () => {
 describe("GET /banco/:id", () => {
   test("Deve retornar um banco", async () => {
     const fakeCode = faker.string.numeric(3);
+    const fakeName = faker.person.fullName();
+    await connection.query(`DELETE FROM BANCO WHERE CODIGO = ? OR NOME = ?`, [
+      fakeCode,
+      fakeName,
+    ]);
     const inputCreate = {
       codigo: fakeCode,
-      nome: "Banco Teste Find One",
+      nome: fakeName,
       url: "teste_find_one.com",
     };
     const responseCreate = await axios.post(`${baseUrl}/banco`, inputCreate);
@@ -55,15 +72,20 @@ describe("GET /banco/:id", () => {
 describe("POST /banco", () => {
   test("Deve criar um banco", async () => {
     const fakeCode = faker.string.numeric(3);
+    const fakeName = faker.person.fullName();
+    await connection.query(`DELETE FROM BANCO WHERE CODIGO = ? OR NOME = ?`, [
+      fakeCode,
+      fakeName,
+    ]);
     const inputCreate = {
       codigo: fakeCode,
-      nome: "Banco Teste",
+      nome: fakeName,
       url: "teste.com",
     };
     const responseCreate = await axios.post(`${baseUrl}/banco`, inputCreate);
     const outputCreate = responseCreate.data;
     const bankId = outputCreate.id;
-    expect(bankId).toBeTruthy()
+    expect(bankId).toBeTruthy();
     expect(responseCreate.status).toBe(201);
     expect(outputCreate.id).toBeTruthy();
     expect(outputCreate.codigo).toBe(inputCreate.codigo);
@@ -124,9 +146,14 @@ describe("POST /banco", () => {
 describe("PUT /banco/:id", () => {
   test("Deve alterar um banco", async () => {
     const fakeCode = faker.string.numeric(3);
+    const fakeName = faker.person.fullName();
+    await connection.query(`DELETE FROM BANCO WHERE CODIGO = ? OR NOME = ?`, [
+      fakeCode,
+      fakeName,
+    ]);
     const inputCreate = {
       codigo: fakeCode,
-      nome: "Banco Teste",
+      nome: fakeName,
       url: "teste.com",
     };
     const responseCreate = await axios.post(`${baseUrl}/banco`, inputCreate);
@@ -219,9 +246,14 @@ describe("PUT /banco/:id", () => {
 describe("DELETE /banco/:id", () => {
   test("Deve deletar um banco", async () => {
     const fakeCode = faker.string.numeric(3);
+    const fakeName = faker.person.fullName();
+    await connection.query(`DELETE FROM BANCO WHERE CODIGO = ? OR NOME = ?`, [
+      fakeCode,
+      fakeName,
+    ]);
     const inputCreate = {
       codigo: fakeCode,
-      nome: "Banco Teste Delete",
+      nome: fakeName,
       url: "teste_delete.com",
     };
     const responseCreate = await axios.post(`${baseUrl}/banco`, inputCreate);

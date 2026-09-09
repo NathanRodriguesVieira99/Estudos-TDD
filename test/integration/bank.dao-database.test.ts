@@ -63,4 +63,19 @@ describe("Bank DAO Database", () => {
       "ID do Banco informado é inválido",
     );
   });
+  test("Deve retornar um banco pelo nome", async () => {
+    const fakeCode = faker.string.numeric(3);
+    const fakeName = faker.person.fullName();
+    const bankId = await bankDAO.save({
+      codigo: fakeCode,
+      nome: fakeName,
+      url: "url.com",
+    });
+    const savedBank = await bankDAO.getByName(fakeName);
+    expect(savedBank).toBeTruthy();
+    expect(savedBank!.BANCO_ID).toBe(bankId);
+    expect(savedBank!.CODIGO).toBe(fakeCode);
+    expect(savedBank!.NOME).toBe(fakeName);
+    expect(savedBank!.URL).toBe("url.com");
+  });
 });

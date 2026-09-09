@@ -1,3 +1,5 @@
+import { faker } from "@faker-js/faker";
+
 import type { BankDAO } from "@/bank.dao-database.ts";
 
 import { BankDAOFake } from "../mocks/fakes/bank.dao.fake.ts";
@@ -47,6 +49,20 @@ describe("Bank DAO Fake", () => {
     expect(savedBank!.BANCO_ID).toBe(bankId);
     expect(savedBank!.CODIGO).toBe("123");
     expect(savedBank!.NOME).toBe("nome");
+    expect(savedBank!.URL).toBe("url.com");
+  });
+  test("Deve retornar um banco pelo nome", async () => {
+    const fakeName = faker.person.fullName();
+    const bankId = await bankDAO.save({
+      codigo: "123",
+      nome: fakeName,
+      url: "url.com",
+    });
+    const savedBank = await bankDAO.getByName(fakeName);
+    expect(savedBank).toBeTruthy();
+    expect(savedBank!.BANCO_ID).toBe(bankId);
+    expect(savedBank!.CODIGO).toBe("123");
+    expect(savedBank!.NOME).toBe(fakeName);
     expect(savedBank!.URL).toBe("url.com");
   });
 });

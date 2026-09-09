@@ -74,4 +74,22 @@ describe("CreateBank UseCase", () => {
     );
     await bankDAO.remove(id);
   });
+  test("Não deve criar um banco com nome repetido", async () => {
+    const fakeName = faker.person.fullName();
+    const firstInputCreate = {
+      codigo: "123",
+      nome: fakeName,
+      url: "teste.com",
+    };
+    const { id } = await sut.execute(firstInputCreate);
+    const secondInputCreate = {
+      codigo: "321",
+      nome: firstInputCreate.nome,
+      url: firstInputCreate.url,
+    };
+    await expect(sut.execute(secondInputCreate)).rejects.toThrow(
+      "Já existe um banco com este nome",
+    );
+    await bankDAO.remove(id);
+  });
 });
