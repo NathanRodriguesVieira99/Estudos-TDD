@@ -23,6 +23,9 @@ export class UpdateBankUseCase implements UseCase<
   constructor(private readonly bankDAO: BankDAO) {}
 
   async execute(input: UpdateBank.Input): Promise<UpdateBank.Output> {
+    if (!input.nome || !input.nome.match(/^.+\s.+$/)) {
+      throw new Error("Nome inválido");
+    }
     const row = await this.bankDAO.getById(input.id);
     const output = {
       id: row?.BANCO_ID,

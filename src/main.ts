@@ -43,19 +43,18 @@ app.post("/banco", async (request: Request, response: Response) => {
 
 app.put("/banco/:id", async (request: Request, response: Response) => {
   const bankData = request.body;
-  if (!bankData.nome || !bankData.nome.match(/^.+\s.+$/)) {
-    return response.status(422).json({
-      message: "Nome inválido",
-    });
-  }
   const bankId = Number(request.params.id);
+  const useCase = new UpdateBankUseCase(bankDAO);
   const input = {
     id: bankId,
     ...bankData,
   };
-  const useCase = new UpdateBankUseCase(bankDAO);
-  const output = await useCase.execute(input);
-  response.status(200).json(output);
+  try {
+    const output = await useCase.execute(input);
+    return response.status(200).json(output);
+  } catch (error: any) {
+    return response.status(422).json({ message: error?.message });
+  }
 });
 
 app.delete("/banco/:id", async (request: Request, response: Response) => {
