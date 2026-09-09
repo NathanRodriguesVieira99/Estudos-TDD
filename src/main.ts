@@ -33,12 +33,21 @@ app.get("/banco/:id", async (request: Request, response: Response) => {
 app.post("/banco", async (request: Request, response: Response) => {
   const input = request.body;
   const useCase = new CreateBankUseCase(bankDAO);
-  const output = await useCase.execute(input);
-  response.status(201).json(output);
+  try {
+    const output = await useCase.execute(input);
+    return response.status(201).json(output);
+  } catch (error: any) {
+    return response.status(422).json({ message: error?.message });
+  }
 });
 
 app.put("/banco/:id", async (request: Request, response: Response) => {
   const bankData = request.body;
+  if (!bankData.nome || !bankData.nome.match(/^.+\s.+$/)) {
+    return response.status(422).json({
+      message: "Nome inválido",
+    });
+  }
   const bankId = Number(request.params.id);
   const input = {
     id: bankId,

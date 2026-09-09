@@ -14,24 +14,38 @@ beforeAll(() => {
   sut = new CreateBankUseCase(bankDAO);
 });
 
-test("Deve criar um banco", async () => {
-  const inputSut = {
-    codigo: "555",
-    nome: "Banco Teste",
-    url: "teste.com",
-  };
-  const outputCreate = await sut.execute(inputSut);
-  expect(outputCreate.id).toBeTruthy();
-  expect(outputCreate.codigo).toBe(inputSut.codigo);
-  expect(outputCreate.nome).toBe(inputSut.nome);
-  expect(outputCreate.url).toBe(inputSut.url);
-  const inputGet = {
-    id: outputCreate.id,
-  };
-  const outputGet = await getBankByIdUseCase.execute(inputGet);
-  expect(outputGet?.id).toBe(outputCreate.id);
-  expect(outputGet?.codigo).toBe(outputCreate.codigo);
-  expect(outputGet?.nome).toBe(outputCreate.nome);
-  expect(outputGet?.url).toBe(outputCreate.url);
-  await bankDAO.remove(outputCreate.id);
+describe("CreateBank UseCase", () => {
+  test("Deve criar um banco", async () => {
+    const inputSut = {
+      codigo: "555",
+      nome: "Banco Teste",
+      url: "teste.com",
+    };
+    const outputCreate = await sut.execute(inputSut);
+    expect(outputCreate.id).toBeTruthy();
+    expect(outputCreate.codigo).toBe(inputSut.codigo);
+    expect(outputCreate.nome).toBe(inputSut.nome);
+    expect(outputCreate.url).toBe(inputSut.url);
+    const inputGet = {
+      id: outputCreate.id,
+    };
+    const outputGet = await getBankByIdUseCase.execute(inputGet);
+    expect(outputGet?.id).toBe(outputCreate.id);
+    expect(outputGet?.codigo).toBe(outputCreate.codigo);
+    expect(outputGet?.nome).toBe(outputCreate.nome);
+    expect(outputGet?.url).toBe(outputCreate.url);
+    await bankDAO.remove(outputCreate.id);
+  });
+
+  test.each([""])(
+    "Não deve criar um banco com nome inválido: %s",
+    async (invalidName: any) => {
+      const inputCreate = {
+        codigo: "555",
+        nome: invalidName,
+        url: "teste.com",
+      };
+      await expect(sut.execute(inputCreate)).rejects.toThrow("Nome inválido");
+    },
+  );
 });
