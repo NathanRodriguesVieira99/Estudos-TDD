@@ -31,6 +31,7 @@ export class UpdateBankUseCase implements UseCase<
       throw new Error("Código inválido");
     }
     const row = await this.bankDAO.getById(input.id);
+    if (!row) throw new Error("Banco não encontrado");
     const output = {
       id: row?.BANCO_ID,
       codigo: row?.CODIGO,

@@ -76,4 +76,15 @@ describe("UpdateBank UseCase", () => {
       await bankDAO.remove(bankId);
     },
   );
+  test("Não deve alterar um banco inexistente", async () => {
+    const inputUpdate = {
+      id: 9_999_999,
+      codigo: "666",
+      nome: "Banco Teste 2",
+      url: "teste2.com",
+    };
+    await expect(sut.execute(inputUpdate)).rejects.toThrow(
+      "Banco não encontrado",
+    );
+  });
 });

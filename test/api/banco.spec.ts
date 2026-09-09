@@ -200,6 +200,21 @@ describe("PUT /banco/:id", () => {
       await axios.delete(`${baseUrl}/banco/${outputCreate.id}`);
     },
   );
+  test.each([""])("Não deve alterar um banco inexistente", async () => {
+    const bankId = 9_999_999;
+    const inputUpdate = {
+      codigo: "666",
+      nome: "Banco Teste 2",
+      url: "teste2.com",
+    };
+    const responseUpdate = await axios.put(
+      `${baseUrl}/banco/${bankId}`,
+      inputUpdate,
+    );
+    expect(responseUpdate.status).toBe(404);
+    const outputUpdate = responseUpdate.data;
+    expect(outputUpdate.message).toBe("Banco não encontrado");
+  });
 });
 describe("DELETE /banco/:id", () => {
   test("Deve deletar um banco", async () => {
