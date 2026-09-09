@@ -1,3 +1,10 @@
+## [0.4.0](https://github.com/NathanRodriguesVieira99/Estudos-TDD/compare/v0.3.0...v0.4.0) (2026-09-09)
+
+
+### Features
+
+* **bank:** garanteed is not possible add bank with duplicated code ([f7074f1](https://github.com/NathanRodriguesVieira99/Estudos-TDD/commit/f7074f1689b927b154504c3f57258120e192c476))
+
 ## [0.3.0](https://github.com/NathanRodriguesVieira99/Estudos-TDD/compare/v0.2.10...v0.3.0) (2026-09-09)
 
 
@@ -14,11 +21,4 @@
 ## [0.2.9](https://github.com/NathanRodriguesVieira99/Estudos-TDD/compare/v0.2.8...v0.2.9) (2026-09-08)
 
 ## [0.2.8](https://github.com/NathanRodriguesVieira99/Estudos-TDD/compare/v0.2.7...v0.2.8) (2026-09-08)
-
-## [0.2.7](https://github.com/NathanRodriguesVieira99/Estudos-TDD/compare/v0.2.6...v0.2.7) (2026-09-08)
-
-
-### Bug Fixes
-
-* **bank:** update creation input values to fix typescript error and format output on usecase ([e9a7f25](https://github.com/NathanRodriguesVieira99/Estudos-TDD/commit/e9a7f2564bd1822cb6b9b9af06088c84d7a37c55))
 
