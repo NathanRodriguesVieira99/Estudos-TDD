@@ -32,6 +32,14 @@ export class UpdateBankUseCase implements UseCase<
     }
     const row = await this.bankDAO.getById(input.id);
     if (!row) throw new Error("Banco não encontrado");
+    if (row.CODIGO !== input.codigo) {
+      const alreadyExistsWithCode = await this.bankDAO.getByCode(input.codigo);
+      if (alreadyExistsWithCode) {
+        throw new Error(
+          "Não é possível alterar o banco para um código já cadastrado",
+        );
+      }
+    }
     const output = {
       id: row?.BANCO_ID,
       codigo: row?.CODIGO,

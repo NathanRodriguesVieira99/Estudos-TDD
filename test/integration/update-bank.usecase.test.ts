@@ -87,4 +87,29 @@ describe("UpdateBank UseCase", () => {
       "Banco não encontrado",
     );
   });
+  test("Não deve alterar um banco para um código já existente", async () => {
+    const firstInputCreate = {
+      codigo: "553",
+      nome: "Banco Teste",
+      url: "teste.com",
+    };
+    const firstBankId = await bankDAO.save(firstInputCreate);
+    const inputUpdate = {
+      id: firstBankId,
+      codigo: "554",
+      nome: "Banco Teste 2",
+      url: "teste2.com",
+    };
+    const secondInputCreate = {
+      codigo: "554",
+      nome: "Banco Teste",
+      url: "teste.com",
+    };
+    const secondBankId = await bankDAO.save(secondInputCreate);
+    await expect(sut.execute(inputUpdate)).rejects.toThrow(
+      "Não é possível alterar o banco para um código já cadastrado",
+    );
+    await bankDAO.remove(firstBankId);
+    await bankDAO.remove(secondBankId);
+  });
 });
