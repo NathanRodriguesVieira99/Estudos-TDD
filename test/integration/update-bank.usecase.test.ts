@@ -94,20 +94,45 @@ describe("UpdateBank UseCase", () => {
       url: "teste.com",
     };
     const firstBankId = await bankDAO.save(firstInputCreate);
-    const inputUpdate = {
-      id: firstBankId,
-      codigo: "554",
-      nome: "Banco Teste 2",
-      url: "teste2.com",
-    };
     const secondInputCreate = {
       codigo: "554",
       nome: "Banco Teste",
       url: "teste.com",
     };
     const secondBankId = await bankDAO.save(secondInputCreate);
+    const inputUpdate = {
+      id: firstBankId,
+      codigo: "554",
+      nome: "Banco Teste 2",
+      url: "teste2.com",
+    };
     await expect(sut.execute(inputUpdate)).rejects.toThrow(
       "Não é possível alterar o banco para um código já cadastrado",
+    );
+    await bankDAO.remove(firstBankId);
+    await bankDAO.remove(secondBankId);
+  });
+  test("Não deve alterar um banco para um nome já existente", async () => {
+    const firstInputCreate = {
+      codigo: "553",
+      nome: "Test Name",
+      url: "teste4.com",
+    };
+    const firstBankId = await bankDAO.save(firstInputCreate);
+    const secondInputCreate = {
+      codigo: '553',
+      nome: "Banco Teste Changed",
+      url: "teste4.com",
+    };
+    const secondBankId = await bankDAO.save(secondInputCreate);
+    const inputUpdate = {
+      id: firstBankId,
+      codigo: firstInputCreate.codigo,
+      nome: secondInputCreate.nome,
+      url: "teste4.changed.com",
+    };
+    await expect(sut.execute(inputUpdate)).rejects.toThrow(
+      "Não é possível alterar o banco para um nome já cadastrado",
     );
     await bankDAO.remove(firstBankId);
     await bankDAO.remove(secondBankId);

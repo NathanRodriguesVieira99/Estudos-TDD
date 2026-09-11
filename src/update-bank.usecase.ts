@@ -40,6 +40,14 @@ export class UpdateBankUseCase implements UseCase<
         );
       }
     }
+    if (row.NOME !== input.nome) {
+      const alreadyExistsWithName = await this.bankDAO.getByName(input.nome);
+      if (alreadyExistsWithName) {
+        throw new Error(
+          "Não é possível alterar o banco para um nome já cadastrado",
+        );
+      }
+    }
     const output = {
       id: row?.BANCO_ID,
       codigo: row?.CODIGO,
