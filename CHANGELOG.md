@@ -1,3 +1,10 @@
+## [0.6.1](https://github.com/NathanRodriguesVieira99/Estudos-TDD/compare/v0.6.0...v0.6.1) (2026-09-12)
+
+
+### Bug Fixes
+
+* **bank:** change db table and column names from UPPER CASE to lower case to avoid fs problens on OS ([a591a93](https://github.com/NathanRodriguesVieira99/Estudos-TDD/commit/a591a93c4a80aed25e64f63e59731c1c268f624f))
+
 ## [0.6.0](https://github.com/NathanRodriguesVieira99/Estudos-TDD/compare/v0.5.0...v0.6.0) (2026-09-11)
 
 
@@ -30,6 +37,4 @@
 * **bank:** garanteed bank is not updated  when provides invalid code ([f179f9e](https://github.com/NathanRodriguesVieira99/Estudos-TDD/commit/f179f9e3acfd0c79a15faffc00d99ac2f9da774a))
 * **bank:** garanteed bank is not updated when not exists ([2880bf9](https://github.com/NathanRodriguesVieira99/Estudos-TDD/commit/2880bf94a0458b85868d62c7336cf68c49c4d742))
 * **bank:** garanteed bank is not updated when provides invalid name value ([4e94b57](https://github.com/NathanRodriguesVieira99/Estudos-TDD/commit/4e94b577a9ec608fbcf8a467ebae6f5d855e0644))
-
-## [0.2.10](https://github.com/NathanRodriguesVieira99/Estudos-TDD/compare/v0.2.9...v0.2.10) (2026-09-08)
 
