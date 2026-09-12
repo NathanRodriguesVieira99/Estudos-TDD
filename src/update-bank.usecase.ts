@@ -32,7 +32,7 @@ export class UpdateBankUseCase implements UseCase<
     }
     const row = await this.bankDAO.getById(input.id);
     if (!row) throw new Error("Banco não encontrado");
-    if (row.CODIGO !== input.codigo) {
+    if (row.codigo !== input.codigo) {
       const alreadyExistsWithCode = await this.bankDAO.getByCode(input.codigo);
       if (alreadyExistsWithCode) {
         throw new Error(
@@ -40,7 +40,7 @@ export class UpdateBankUseCase implements UseCase<
         );
       }
     }
-    if (row.NOME !== input.nome) {
+    if (row.nome !== input.nome) {
       const alreadyExistsWithName = await this.bankDAO.getByName(input.nome);
       if (alreadyExistsWithName) {
         throw new Error(
@@ -49,10 +49,10 @@ export class UpdateBankUseCase implements UseCase<
       }
     }
     const output = {
-      id: row?.BANCO_ID,
-      codigo: row?.CODIGO,
-      nome: row?.NOME,
-      url: row?.URL,
+      id: row?.banco_id,
+      codigo: row?.codigo,
+      nome: row?.nome,
+      url: row?.url,
     };
     const updatedBank = {
       ...output,

@@ -20,10 +20,10 @@ export class GetBankListUseCase implements UseCase<
   async execute(): Promise<GetBankList.Output> {
     const rows = await this.bankDAO.list();
     const output = rows.map((row) => ({
-      id: row.BANCO_ID,
-      codigo: row.CODIGO,
-      nome: row.NOME,
-      url: row.URL,
+      id: row.banco_id,
+      codigo: row.codigo,
+      nome: row.nome,
+      url: row.url,
     }));
     return output;
   }

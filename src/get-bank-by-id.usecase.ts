@@ -25,10 +25,10 @@ export class GetBankByIdUseCase implements UseCase<
     const row = await this.bankDAO.getById(input.id);
     if (!row) return undefined;
     const output = {
-      id: row.BANCO_ID,
-      codigo: row.CODIGO,
-      nome: row.NOME,
-      url: row.URL,
+      id: row.banco_id,
+      codigo: row.codigo,
+      nome: row.nome,
+      url: row.url,
     };
     return output;
   }

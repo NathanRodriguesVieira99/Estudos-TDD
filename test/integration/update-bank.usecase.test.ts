@@ -32,10 +32,10 @@ describe("UpdateBank UseCase", () => {
     expect(outputUpdate.url).toBe(inputUpdate.url);
     const outputGet = await bankDAO.getById(bankId);
     expect(outputGet).toBeTruthy();
-    expect(outputGet?.BANCO_ID).toBe(bankId);
-    expect(outputGet?.CODIGO).toBe(inputUpdate.codigo);
-    expect(outputGet?.NOME).toBe(inputUpdate.nome);
-    expect(outputGet?.URL).toBe(inputUpdate.url);
+    expect(outputGet?.banco_id).toBe(bankId);
+    expect(outputGet?.codigo).toBe(inputUpdate.codigo);
+    expect(outputGet?.nome).toBe(inputUpdate.nome);
+    expect(outputGet?.url).toBe(inputUpdate.url);
     await bankDAO.remove(bankId);
   });
   test.each(["", null, undefined, "Teste"])(
@@ -120,7 +120,7 @@ describe("UpdateBank UseCase", () => {
     };
     const firstBankId = await bankDAO.save(firstInputCreate);
     const secondInputCreate = {
-      codigo: '553',
+      codigo: "553",
       nome: "Banco Teste Changed",
       url: "teste4.com",
     };

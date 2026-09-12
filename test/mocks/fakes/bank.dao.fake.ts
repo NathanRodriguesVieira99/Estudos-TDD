@@ -10,10 +10,10 @@ export class BankDAOFake implements BankDAO {
   async save(dto: BankDAO.SaveDTO): Promise<number> {
     const newId = this.bankList.length + 1;
     this.bankList.push({
-      BANCO_ID: newId,
-      CODIGO: dto.codigo,
-      NOME: dto.nome,
-      URL: dto.url,
+      banco_id: newId,
+      codigo: dto.codigo,
+      nome: dto.nome,
+      url: dto.url,
     });
     return newId;
   }
@@ -23,29 +23,29 @@ export class BankDAOFake implements BankDAO {
   }
 
   async remove(bankId: number): Promise<void> {
-    this.bankList = this.bankList.filter((bank) => bank.BANCO_ID !== bankId);
+    this.bankList = this.bankList.filter((bank) => bank.banco_id !== bankId);
   }
 
   async getById(bankId: number): Promise<BankDAO.BankDTO | undefined> {
-    return this.bankList.find((bank) => bank.BANCO_ID === bankId);
+    return this.bankList.find((bank) => bank.banco_id === bankId);
   }
 
   async getByCode(code: string): Promise<BankDAO.BankDTO | undefined> {
-    return this.bankList.find((bank) => bank.CODIGO === code);
+    return this.bankList.find((bank) => bank.codigo === code);
   }
 
   async getByName(name: string): Promise<BankDAO.BankDTO | undefined> {
-    return this.bankList.find((bank) => bank.NOME === name);
+    return this.bankList.find((bank) => bank.nome === name);
   }
 
   async update(dto: BankDAO.UpdateDTO): Promise<void> {
     this.bankList = this.bankList.map((bank) => {
-      if (bank.BANCO_ID === dto.id) {
+      if (bank.banco_id === dto.id) {
         return {
-          BANCO_ID: dto.id,
-          CODIGO: dto.codigo ?? bank.CODIGO,
-          NOME: dto.nome ?? bank.NOME,
-          URL: dto.url ?? bank.URL,
+          banco_id: dto.id,
+          codigo: dto.codigo ?? bank.codigo,
+          nome: dto.nome ?? bank.nome,
+          url: dto.url ?? bank.url,
         };
       }
       return bank;

@@ -24,10 +24,10 @@ export namespace BankDAO {
     url: string;
   };
   export type BankDTO = {
-    BANCO_ID: number;
-    CODIGO: string;
-    NOME: string;
-    URL: string;
+    banco_id: number;
+    codigo: string;
+    nome: string;
+    url: string;
   };
 }
 
@@ -37,7 +37,7 @@ export class BankDAODatabase implements BankDAO {
       String(process.env.DATABASE_URL),
     );
     const [row] = await connection.query(
-      `INSERT INTO BANCO(CODIGO,NOME,URL) VALUES(?,?,?)`,
+      `INSERT INTO banco(codigo,nome,url) VALUES(?,?,?)`,
       [dto.codigo, dto.nome, dto.url],
     );
     const bankId = (row as any).insertId;
@@ -49,7 +49,7 @@ export class BankDAODatabase implements BankDAO {
     const connection = mysqlConnection.createPool(
       String(process.env.DATABASE_URL),
     );
-    const [rows] = await connection.query<any[]>(`SELECT * FROM BANCO`, []);
+    const [rows] = await connection.query<any[]>(`SELECT * FROM banco`, []);
     connection.pool.end();
     return rows;
   }
@@ -59,7 +59,7 @@ export class BankDAODatabase implements BankDAO {
     const connection = mysqlConnection.createPool(
       String(process.env.DATABASE_URL),
     );
-    await connection.query(`DELETE FROM BANCO WHERE BANCO_ID = ? LIMIT 1`, [
+    await connection.query(`DELETE FROM banco WHERE banco_id = ? LIMIT 1`, [
       bankId,
     ]);
     connection.pool.end();
@@ -70,7 +70,7 @@ export class BankDAODatabase implements BankDAO {
       String(process.env.DATABASE_URL),
     );
     const [rows] = await connection.query<any[]>(
-      `SELECT * FROM BANCO WHERE BANCO_ID = ? LIMIT 1`,
+      `SELECT * FROM banco WHERE banco_id = ? LIMIT 1`,
       [bankId],
     );
     const [firstRow] = rows;
@@ -83,7 +83,7 @@ export class BankDAODatabase implements BankDAO {
       String(process.env.DATABASE_URL),
     );
     const [rows] = await connection.query<any[]>(
-      `SELECT * FROM BANCO WHERE CODIGO = ? LIMIT 1`,
+      `SELECT * FROM banco WHERE codigo = ? LIMIT 1`,
       [code],
     );
     const [firstRow] = rows;
@@ -96,7 +96,7 @@ export class BankDAODatabase implements BankDAO {
       String(process.env.DATABASE_URL),
     );
     const [rows] = await connection.query<any[]>(
-      `SELECT * FROM BANCO WHERE NOME = ? LIMIT 1`,
+      `SELECT * FROM banco WHERE nome = ? LIMIT 1`,
       [name],
     );
     const [firstRow] = rows;
@@ -109,7 +109,7 @@ export class BankDAODatabase implements BankDAO {
       String(process.env.DATABASE_URL),
     );
     await connection.query(
-      `UPDATE BANCO SET CODIGO = ?, NOME = ?, URL = ? WHERE BANCO_ID = ?`,
+      `UPDATE banco SET codigo = ?, nome = ?, URL = ? WHERE banco_id = ?`,
       [dto.codigo, dto.nome, dto.url, dto.id],
     );
     connection.pool.end();

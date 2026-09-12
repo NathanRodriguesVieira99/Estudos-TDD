@@ -23,5 +23,5 @@ test("Deve deletar um banco ", async () => {
   };
   await sut.execute(inputSut);
   const bankExists = await bankDAO.getById(bankId);
-  expect(bankExists?.BANCO_ID).toBeFalsy();
+  expect(bankExists?.banco_ID).toBeFalsy();
 });

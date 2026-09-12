@@ -18,11 +18,11 @@ describe("Bank DAO Fake", () => {
       url: "url",
     });
     const listBank = await bankDAO.list();
-    const exists = listBank.find((bank) => bank.BANCO_ID === bankId);
+    const exists = listBank.find((bank) => bank.banco_id === bankId);
     expect(exists).toBeTruthy();
-    expect(exists?.CODIGO).toBe("123");
-    expect(exists?.NOME).toBe("nome");
-    expect(exists?.URL).toBe("url");
+    expect(exists?.codigo).toBe("123");
+    expect(exists?.nome).toBe("nome");
+    expect(exists?.url).toBe("url");
     await bankDAO.update({
       id: bankId,
       codigo: "321",
@@ -31,9 +31,9 @@ describe("Bank DAO Fake", () => {
     });
     const updatedBank = await bankDAO.getById(bankId);
     expect(updatedBank).toBeTruthy();
-    expect(updatedBank?.CODIGO).toBe("321");
-    expect(updatedBank?.NOME).toBe("nome alterado");
-    expect(updatedBank?.URL).toBe("url alterada");
+    expect(updatedBank?.codigo).toBe("321");
+    expect(updatedBank?.nome).toBe("nome alterado");
+    expect(updatedBank?.url).toBe("url alterada");
     await bankDAO.remove(bankId);
     const bankData = await bankDAO.getById(bankId);
     expect(bankData).toBeFalsy();
@@ -46,10 +46,10 @@ describe("Bank DAO Fake", () => {
     });
     const savedBank = await bankDAO.getByCode("123");
     expect(savedBank).toBeTruthy();
-    expect(savedBank!.BANCO_ID).toBe(bankId);
-    expect(savedBank!.CODIGO).toBe("123");
-    expect(savedBank!.NOME).toBe("nome");
-    expect(savedBank!.URL).toBe("url.com");
+    expect(savedBank!.banco_id).toBe(bankId);
+    expect(savedBank!.codigo).toBe("123");
+    expect(savedBank!.nome).toBe("nome");
+    expect(savedBank!.url).toBe("url.com");
   });
   test("Deve retornar um banco pelo nome", async () => {
     const fakeName = faker.person.fullName();
@@ -60,9 +60,9 @@ describe("Bank DAO Fake", () => {
     });
     const savedBank = await bankDAO.getByName(fakeName);
     expect(savedBank).toBeTruthy();
-    expect(savedBank!.BANCO_ID).toBe(bankId);
-    expect(savedBank!.CODIGO).toBe("123");
-    expect(savedBank!.NOME).toBe(fakeName);
-    expect(savedBank!.URL).toBe("url.com");
+    expect(savedBank!.banco_id).toBe(bankId);
+    expect(savedBank!.codigo).toBe("123");
+    expect(savedBank!.nome).toBe(fakeName);
+    expect(savedBank!.url).toBe("url.com");
   });
 });

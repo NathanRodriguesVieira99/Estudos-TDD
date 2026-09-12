@@ -17,7 +17,7 @@ describe("GET /banco", () => {
   test("Deve retornar a lista de bancos", async () => {
     const fakeCode = faker.string.numeric(3);
     const fakeName = faker.person.fullName();
-    await connection.query(`DELETE FROM BANCO WHERE CODIGO = ? OR NOME = ?`, [
+    await connection.query(`DELETE FROM banco WHERE codigo = ? OR nome = ?`, [
       fakeCode,
       fakeName,
     ]);
@@ -47,7 +47,7 @@ describe("GET /banco/:id", () => {
   test("Deve retornar um banco", async () => {
     const fakeCode = faker.string.numeric(3);
     const fakeName = faker.person.fullName();
-    await connection.query(`DELETE FROM BANCO WHERE CODIGO = ? OR NOME = ?`, [
+    await connection.query(`DELETE FROM banco WHERE codigo = ? OR nome = ?`, [
       fakeCode,
       fakeName,
     ]);
@@ -73,7 +73,7 @@ describe("POST /banco", () => {
   test("Deve criar um banco", async () => {
     const fakeCode = faker.string.numeric(3);
     const fakeName = faker.person.fullName();
-    await connection.query(`DELETE FROM BANCO WHERE CODIGO = ? OR NOME = ?`, [
+    await connection.query(`DELETE FROM banco WHERE codigo = ? OR nome = ?`, [
       fakeCode,
       fakeName,
     ]);
@@ -147,10 +147,11 @@ describe("PUT /banco/:id", () => {
   test("Deve alterar um banco", async () => {
     const fakeCode = faker.string.numeric(3);
     const fakeName = faker.person.fullName();
-    await connection.query(`DELETE FROM BANCO WHERE CODIGO = ? OR NOME = ?`, [
-      fakeCode,
-      fakeName,
-    ]);
+    const fakeNameUpdate = faker.person.fullName();
+    await connection.query(
+      `DELETE FROM banco WHERE codigo = ? OR nome = ? OR nome = ?`,
+      [fakeCode, fakeName, fakeNameUpdate],
+    );
     const inputCreate = {
       codigo: fakeCode,
       nome: fakeName,
@@ -161,7 +162,7 @@ describe("PUT /banco/:id", () => {
     const bankId = outputCreate.id;
     const inputUpdate = {
       codigo: fakeCode,
-      nome: "Banco Teste 2",
+      nome: fakeNameUpdate,
       url: "teste2.com",
     };
     const responseUpdate = await axios.put(
@@ -169,6 +170,7 @@ describe("PUT /banco/:id", () => {
       inputUpdate,
     );
     const outputUpdate = responseUpdate.data;
+    console.log(responseUpdate.data);
     expect(responseUpdate.status).toBe(200);
     expect(outputUpdate.id).toBe(bankId);
     expect(outputUpdate.codigo).toBe(inputUpdate.codigo);
@@ -247,7 +249,7 @@ describe("DELETE /banco/:id", () => {
   test("Deve deletar um banco", async () => {
     const fakeCode = faker.string.numeric(3);
     const fakeName = faker.person.fullName();
-    await connection.query(`DELETE FROM BANCO WHERE CODIGO = ? OR NOME = ?`, [
+    await connection.query(`DELETE FROM banco WHERE codigo = ? OR nome = ?`, [
       fakeCode,
       fakeName,
     ]);
