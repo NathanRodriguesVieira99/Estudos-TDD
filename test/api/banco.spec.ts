@@ -170,7 +170,6 @@ describe("PUT /banco/:id", () => {
       inputUpdate,
     );
     const outputUpdate = responseUpdate.data;
-    console.log(responseUpdate.data);
     expect(responseUpdate.status).toBe(200);
     expect(outputUpdate.id).toBe(bankId);
     expect(outputUpdate.codigo).toBe(inputUpdate.codigo);
