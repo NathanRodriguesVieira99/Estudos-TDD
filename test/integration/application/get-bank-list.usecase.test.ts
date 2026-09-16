@@ -1,7 +1,7 @@
-import { type BankDAO } from "@/bank.dao-database.ts";
-import { GetBankListUseCase } from "@/get-bank-list.usecase.ts";
+import { GetBankListUseCase } from "@/application/usecases/get-bank-list.usecase.ts";
+import { type BankDAO } from "@/external/DAOs/bank.dao-database.ts";
 
-import { BankDAOFake } from "../mocks/fakes/bank.dao.fake.ts";
+import { BankDAOFake } from "../../mocks/fakes/bank.dao.fake.ts";
 
 let bankDAO: BankDAO;
 let sut: GetBankListUseCase;

@@ -1,6 +1,6 @@
-import type { BankDAO } from "./bank.dao-database.ts";
-import type { UseCase } from "./useCase.ts";
+import type { BankDAO } from "@/external/DAOs/bank.dao-database.ts";
 
+import type { UseCase } from "./useCase.ts";
 export namespace UpdateBank {
   export type Input = {
     id: number;

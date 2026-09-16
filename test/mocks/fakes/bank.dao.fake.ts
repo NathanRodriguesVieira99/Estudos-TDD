@@ -1,4 +1,4 @@
-import type { BankDAO } from "@/bank.dao-database.ts";
+import type { BankDAO } from "@/external/DAOs/bank.dao-database.ts";
 
 export class BankDAOFake implements BankDAO {
   private bankList: BankDAO.BankDTO[];

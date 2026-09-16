@@ -1,10 +1,10 @@
 import { faker } from "@faker-js/faker";
 
-import type { BankDAO } from "@/bank.dao-database.ts";
-import { CreateBankUseCase } from "@/create-bank.usecase.ts";
-import { GetBankByIdUseCase } from "@/get-bank-by-id.usecase.ts";
+import { CreateBankUseCase } from "@/application/usecases/create-bank.usecase.ts";
+import { GetBankByIdUseCase } from "@/application/usecases/get-bank-by-id.usecase.ts";
+import type { BankDAO } from "@/external/DAOs/bank.dao-database.ts";
 
-import { BankDAOFake } from "../mocks/fakes/bank.dao.fake.ts";
+import { BankDAOFake } from "../../mocks/fakes/bank.dao.fake.ts";
 
 let bankDAO: BankDAO;
 let getBankByIdUseCase: GetBankByIdUseCase;

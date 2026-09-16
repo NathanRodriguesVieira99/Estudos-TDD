@@ -1,12 +1,12 @@
 import cors from "cors";
 import express, { type Request, type Response } from "express";
 
-import { BankDAODatabase } from "./bank.dao-database.ts";
-import { CreateBankUseCase } from "./create-bank.usecase.ts";
-import { GetBankByIdUseCase } from "./get-bank-by-id.usecase.ts";
-import { GetBankListUseCase } from "./get-bank-list.usecase.ts";
-import { RemoveBankUseCase } from "./remove-bank.usecase.ts";
-import { UpdateBankUseCase } from "./update-bank.usecase.ts";
+import { CreateBankUseCase } from "./application/usecases/create-bank.usecase.ts";
+import { GetBankByIdUseCase } from "./application/usecases/get-bank-by-id.usecase.ts";
+import { GetBankListUseCase } from "./application/usecases/get-bank-list.usecase.ts";
+import { RemoveBankUseCase } from "./application/usecases/remove-bank.usecase.ts";
+import { UpdateBankUseCase } from "./application/usecases/update-bank.usecase.ts";
+import { BankDAODatabase } from "./external/DAOs/bank.dao-database.ts";
 
 const app = express();
 

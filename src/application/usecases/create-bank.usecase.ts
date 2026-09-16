@@ -1,4 +1,5 @@
-import type { BankDAO } from "./bank.dao-database.ts";
+import type { BankDAO } from "@/external/DAOs/bank.dao-database.ts";
+
 import type { UseCase } from "./useCase.ts";
 
 export namespace CreateBank {
@@ -34,7 +35,8 @@ export class CreateBankUseCase implements UseCase<
       throw new Error("Já existe um banco com este código");
     }
     const alreadyExistsWithName = await this.bankDAO.getByName(input.nome);
-    if(alreadyExistsWithName)throw new Error('Já existe um banco com este nome')
+    if (alreadyExistsWithName)
+      throw new Error("Já existe um banco com este nome");
     const bankId = await this.bankDAO.save(input);
     const output = {
       id: bankId,

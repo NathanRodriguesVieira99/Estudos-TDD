@@ -1,7 +1,7 @@
 import { faker } from "@faker-js/faker";
 import mysqlConnection from "mysql2/promise";
 
-import { BankDAODatabase } from "@/bank.dao-database.ts";
+import { BankDAODatabase } from "@/external/DAOs/bank.dao-database.ts";
 
 let bankDAO: BankDAODatabase;
 
