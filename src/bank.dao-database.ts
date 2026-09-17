@@ -1,6 +1,9 @@
 import mysqlConnection from "mysql2/promise";
 
-/* DAO abstrai uma tabela do banco de dados de forma 1:1 */
+/*
+ * DAO abstrai uma tabela do banco de dados de forma 1:1 e trafega/manipula apanas DTOs.
+ * Não possui "inteligência".
+ */
 export interface BankDAO {
   save(dto: BankDAO.SaveDTO): Promise<number>;
   list(): Promise<BankDAO.BankDTO[]>;
