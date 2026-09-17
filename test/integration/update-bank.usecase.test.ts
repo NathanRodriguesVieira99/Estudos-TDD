@@ -1,7 +1,7 @@
-import { UpdateBankUseCase } from "@/application/usecases/update-bank.usecase.ts";
-import { BankDAO } from "@/external/DAOs/bank.dao-database.ts";
+import { BankDAO } from "@/bank.dao-database.ts";
+import { UpdateBankUseCase } from "@/update-bank.usecase.ts";
 
-import { BankDAOFake } from "../../mocks/fakes/bank.dao.fake.ts";
+import { BankDAOFake } from "../mocks/fakes/bank.dao-fake.ts";
 
 let bankDAO: BankDAO;
 let sut: UpdateBankUseCase;
