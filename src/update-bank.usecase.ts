@@ -1,3 +1,5 @@
+import { validateBankCode } from "./validate-bank-code.ts";
+import { validateBankName } from "./validate-bank-name.ts";
 import type { BankRepository } from "./bank.repository-database.ts";
 import type { UseCase } from "./useCase.ts";
 
@@ -23,13 +25,8 @@ export class UpdateBankUseCase implements UseCase<
   constructor(private readonly bankRepository: BankRepository) {}
 
   async execute(input: UpdateBank.Input): Promise<UpdateBank.Output> {
-    if (!input.nome) throw new Error("Nome inválido");
-    if (!input.nome.match(/^.+\s.+$/)) throw new Error("Nome inválido");
-    if (!input.codigo) throw new Error("Código inválido");
-    if (input.codigo.length !== 3) throw new Error("Código inválido");
-    if (input.codigo.replace(/\D/g, "").length !== 3) {
-      throw new Error("Código inválido");
-    }
+    if (!validateBankName(input.nome)) throw new Error("Nome inválido");
+    if (!validateBankCode(input.codigo)) throw new Error("Código inválido");
     const bank = await this.bankRepository.findById(input.id);
     if (!bank) throw new Error("Banco não encontrado");
     if (bank.getCode() !== input.codigo) {

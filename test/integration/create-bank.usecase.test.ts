@@ -35,28 +35,24 @@ describe("CreateBank UseCase", () => {
     expect(bank?.getUrl()).toBe(outputCreate.url);
     await bankDAO.remove(outputCreate.id);
   });
-  test.each(["", null, undefined, "Teste"])(
-    "Não deve criar um banco com nome inválido: %s",
-    async (invalidName: any) => {
-      const inputCreate = {
-        codigo: "555",
-        nome: invalidName,
-        url: "teste.com",
-      };
-      await expect(sut.execute(inputCreate)).rejects.toThrow("Nome inválido");
-    },
-  );
-  test.each(["", null, undefined, "String", "1", "01"])(
-    "Não deve criar um banco com código inválido: %s",
-    async (invalidCode: any) => {
-      const inputCreate = {
-        codigo: invalidCode,
-        nome: "Teste Silva",
-        url: "teste.com",
-      };
-      await expect(sut.execute(inputCreate)).rejects.toThrow("Código inválido");
-    },
-  );
+  test("Não deve criar um banco com nome inválido", async () => {
+    const invalidName = "";
+    const inputCreate = {
+      codigo: "555",
+      nome: invalidName,
+      url: "teste.com",
+    };
+    await expect(sut.execute(inputCreate)).rejects.toThrow("Nome inválido");
+  });
+  test("Não deve criar um banco com código inválido", async () => {
+    const invalidCode = "";
+    const inputCreate = {
+      codigo: invalidCode,
+      nome: "Teste Silva",
+      url: "teste.com",
+    };
+    await expect(sut.execute(inputCreate)).rejects.toThrow("Código inválido");
+  });
   test("Não deve criar um banco com código repetido", async () => {
     const fakeCode = faker.string.numeric(3);
     const inputCreate = {

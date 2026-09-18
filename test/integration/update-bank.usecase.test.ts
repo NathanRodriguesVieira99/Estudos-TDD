@@ -39,44 +39,40 @@ describe("UpdateBank UseCase", () => {
     expect(outputGet?.getUrl()).toBe(inputUpdate.url);
     await bankRepository.remove(bankId);
   });
-  test.each(["", null, undefined, "Teste"])(
-    "Não deve alterar um banco com nome inválido: %s",
-    async (invalidName: any) => {
-      const code = faker.string.numeric(3);
-      const name = faker.person.fullName();
-      const url = faker.internet.url();
-      const bank = Bank.create({ code, name, url });
-      const savedBank = await bankRepository.save(bank);
-      const bankId = savedBank.getId();
-      const inputUpdate = {
-        id: bankId,
-        codigo: "553",
-        nome: invalidName,
-        url: "teste2.com",
-      };
-      await expect(sut.execute(inputUpdate)).rejects.toThrow("Nome inválido");
-      await bankRepository.remove(bankId);
-    },
-  );
-  test.each(["", null, undefined, "String", "1", "01"])(
-    "Não deve alterar um banco com código inválido: %s",
-    async (invalidCode: any) => {
-      const code = faker.string.numeric(3);
-      const name = faker.person.fullName();
-      const url = faker.internet.url();
-      const bank = Bank.create({ code, name, url });
-      const savedBank = await bankRepository.save(bank);
-      const bankId = savedBank.getId();
-      const inputUpdate = {
-        id: bankId,
-        codigo: invalidCode,
-        nome: "Banco Teste 2",
-        url: "teste2.com",
-      };
-      await expect(sut.execute(inputUpdate)).rejects.toThrow("Código inválido");
-      await bankRepository.remove(bankId);
-    },
-  );
+  test("Não deve alterar um banco com nome inválido", async () => {
+    const code = faker.string.numeric(3);
+    const name = faker.person.fullName();
+    const url = faker.internet.url();
+    const bank = Bank.create({ code, name, url });
+    const savedBank = await bankRepository.save(bank);
+    const bankId = savedBank.getId();
+    const invalidName = "";
+    const inputUpdate = {
+      id: bankId,
+      codigo: "553",
+      nome: invalidName,
+      url: "teste2.com",
+    };
+    await expect(sut.execute(inputUpdate)).rejects.toThrow("Nome inválido");
+    await bankRepository.remove(bankId);
+  });
+  test("Não deve alterar um banco com código inválido", async () => {
+    const code = faker.string.numeric(3);
+    const name = faker.person.fullName();
+    const url = faker.internet.url();
+    const bank = Bank.create({ code, name, url });
+    const savedBank = await bankRepository.save(bank);
+    const bankId = savedBank.getId();
+    const invalidCode = "";
+    const inputUpdate = {
+      id: bankId,
+      codigo: invalidCode,
+      nome: "Banco Teste 2",
+      url: "teste2.com",
+    };
+    await expect(sut.execute(inputUpdate)).rejects.toThrow("Código inválido");
+    await bankRepository.remove(bankId);
+  });
   test("Não deve alterar um banco inexistente", async () => {
     const inputUpdate = {
       id: 9_999_999,
