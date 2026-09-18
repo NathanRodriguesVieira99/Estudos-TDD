@@ -1,19 +1,18 @@
 import { faker } from "@faker-js/faker";
-
-import { CreateBankUseCase } from "@/application/usecases/create-bank.usecase.ts";
-import { GetBankByIdUseCase } from "@/application/usecases/get-bank-by-id.usecase.ts";
-import type { BankDAO } from "@/external/DAOs/bank.dao-database.ts";
-
-import { BankDAOFake } from "../../mocks/fakes/bank.dao.fake.ts";
+import { CreateBankUseCase } from "@/create-bank.usecase.ts";
+import { BankDAOFake } from "../mocks/fakes/bank.dao-fake.ts";
+import { BankRepositoryFake } from "../mocks/fakes/bank.repository-fake.ts";
+import type { BankDAO } from "@/bank.dao-database.ts";
+import type { BankRepository } from "@/bank.repository-database.ts";
 
 let bankDAO: BankDAO;
-let getBankByIdUseCase: GetBankByIdUseCase;
+let bankRepository: BankRepository;
 let sut: CreateBankUseCase;
 
 beforeEach(() => {
   bankDAO = new BankDAOFake();
-  getBankByIdUseCase = new GetBankByIdUseCase(bankDAO);
-  sut = new CreateBankUseCase(bankDAO);
+  bankRepository = new BankRepositoryFake();
+  sut = new CreateBankUseCase(bankRepository);
 });
 
 describe("CreateBank UseCase", () => {
@@ -29,14 +28,11 @@ describe("CreateBank UseCase", () => {
     expect(outputCreate.codigo).toBe(inputSut.codigo);
     expect(outputCreate.nome).toBe(inputSut.nome);
     expect(outputCreate.url).toBe(inputSut.url);
-    const inputGet = {
-      id: outputCreate.id,
-    };
-    const outputGet = await getBankByIdUseCase.execute(inputGet);
-    expect(outputGet?.id).toBe(outputCreate.id);
-    expect(outputGet?.codigo).toBe(outputCreate.codigo);
-    expect(outputGet?.nome).toBe(outputCreate.nome);
-    expect(outputGet?.url).toBe(outputCreate.url);
+    const bank = await bankRepository.findById(outputCreate.id);
+    expect(bank?.getId()).toBe(outputCreate.id);
+    expect(bank?.getCode()).toBe(outputCreate.codigo);
+    expect(bank?.getName()).toBe(outputCreate.nome);
+    expect(bank?.getUrl()).toBe(outputCreate.url);
     await bankDAO.remove(outputCreate.id);
   });
   test.each(["", null, undefined, "Teste"])(

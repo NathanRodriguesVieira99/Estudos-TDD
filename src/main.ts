@@ -1,12 +1,12 @@
 import cors from "cors";
 import express, { type Request, type Response } from "express";
-
-import { CreateBankUseCase } from "./application/usecases/create-bank.usecase.ts";
-import { GetBankByIdUseCase } from "./application/usecases/get-bank-by-id.usecase.ts";
-import { GetBankListUseCase } from "./application/usecases/get-bank-list.usecase.ts";
-import { RemoveBankUseCase } from "./application/usecases/remove-bank.usecase.ts";
-import { UpdateBankUseCase } from "./application/usecases/update-bank.usecase.ts";
-import { BankDAODatabase } from "./external/DAOs/bank.dao-database.ts";
+import { BankDAODatabase } from "./bank.dao-database.ts";
+import { BankRepositoryDatabase } from "./bank.repository-database.ts";
+import { CreateBankUseCase } from "./create-bank.usecase.ts";
+import { GetBankByIdUseCase } from "./get-bank-by-id.usecase.ts";
+import { GetBankListUseCase } from "./get-bank-list.usecase.ts";
+import { RemoveBankUseCase } from "./remove-bank.usecase.ts";
+import { UpdateBankUseCase } from "./update-bank.usecase.ts";
 
 const app = express();
 
@@ -14,6 +14,7 @@ app.use(express.json());
 app.use(cors());
 
 const bankDAO = new BankDAODatabase();
+const bankRepository = new BankRepositoryDatabase();
 
 app.get("/banco", async (request: Request, response: Response) => {
   const useCase = new GetBankListUseCase(bankDAO);
@@ -32,7 +33,7 @@ app.get("/banco/:id", async (request: Request, response: Response) => {
 
 app.post("/banco", async (request: Request, response: Response) => {
   const input = request.body;
-  const useCase = new CreateBankUseCase(bankDAO);
+  const useCase = new CreateBankUseCase(bankRepository);
   try {
     const output = await useCase.execute(input);
     return response.status(201).json(output);
