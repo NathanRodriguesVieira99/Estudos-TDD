@@ -1,3 +1,5 @@
+## [0.7.1](https://github.com/NathanRodriguesVieira99/Estudos-TDD/compare/v0.7.0...v0.7.1) (2026-09-18)
+
 ## [0.7.0](https://github.com/NathanRodriguesVieira99/Estudos-TDD/compare/v0.6.2...v0.7.0) (2026-09-18)
 
 
@@ -22,11 +24,4 @@
 
 * **bank:** garanteed is not possible to update bank with duplicated code ([536b70d](https://github.com/NathanRodriguesVieira99/Estudos-TDD/commit/536b70dd5edd918b9e2325aa0d1b26b88ee09a91))
 * **bank:** garanteed is not possible to update bank with duplicated name ([8af4d74](https://github.com/NathanRodriguesVieira99/Estudos-TDD/commit/8af4d74148ab97009be3aa640a179c0a9d3a136e))
-
-## [0.5.0](https://github.com/NathanRodriguesVieira99/Estudos-TDD/compare/v0.4.0...v0.5.0) (2026-09-09)
-
-
-### Features
-
-* **bank:** garanteed is not possible to add bank with duplicated name ([9bb29df](https://github.com/NathanRodriguesVieira99/Estudos-TDD/commit/9bb29df0b66b53b36983bd1e6308764bd9cbeddf))
 
