@@ -1,3 +1,11 @@
+## [0.7.0](https://github.com/NathanRodriguesVieira99/Estudos-TDD/compare/v0.6.2...v0.7.0) (2026-09-18)
+
+
+### Features
+
+* **bank:** add bank entity ([be38feb](https://github.com/NathanRodriguesVieira99/Estudos-TDD/commit/be38febf81a0e5a5e6776466f6df91b2a83d0913))
+* **bank:** add bank repository ([3ebc565](https://github.com/NathanRodriguesVieira99/Estudos-TDD/commit/3ebc565024a8d26f0d91e2f37f61fc44ba3f923c))
+
 ## [0.6.2](https://github.com/NathanRodriguesVieira99/Estudos-TDD/compare/v0.6.1...v0.6.2) (2026-09-15)
 
 ## [0.6.1](https://github.com/NathanRodriguesVieira99/Estudos-TDD/compare/v0.6.0...v0.6.1) (2026-09-12)
@@ -21,11 +29,4 @@
 ### Features
 
 * **bank:** garanteed is not possible to add bank with duplicated name ([9bb29df](https://github.com/NathanRodriguesVieira99/Estudos-TDD/commit/9bb29df0b66b53b36983bd1e6308764bd9cbeddf))
-
-## [0.4.0](https://github.com/NathanRodriguesVieira99/Estudos-TDD/compare/v0.3.0...v0.4.0) (2026-09-09)
-
-
-### Features
-
-* **bank:** garanteed is not possible add bank with duplicated code ([f7074f1](https://github.com/NathanRodriguesVieira99/Estudos-TDD/commit/f7074f1689b927b154504c3f57258120e192c476))
 
