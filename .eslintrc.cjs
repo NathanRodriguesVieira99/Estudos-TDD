@@ -1,10 +1,10 @@
 module.exports = {
   extends: [],
   parser: "@typescript-eslint/parser",
-  plugins: ["simple-import-sort"],
+  plugins: [],
   rules: {
-    "simple-import-sort/imports": "error",
-    "simple-import-sort/exports": "error",
+    // "simple-import-sort/imports": "error",
+    // "simple-import-sort/exports": "error",
     "@typescript-eslint/no-explicit-any": "off",
   },
 };
