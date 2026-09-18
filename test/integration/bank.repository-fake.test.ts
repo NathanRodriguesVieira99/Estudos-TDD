@@ -1,5 +1,5 @@
 import { Bank } from "@/bank.ts";
-import { BankRepositoryFake } from "../__mocks__/fakes/bank.repository-fake.ts";
+import { BankRepositoryFake } from "../__mocks__/bank.repository-fake.ts";
 import type { BankRepository } from "@/bank.repository-database.ts";
 
 let sut: BankRepository;

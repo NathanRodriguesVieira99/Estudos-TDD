@@ -1,7 +1,7 @@
 import { faker } from "@faker-js/faker";
 import { CreateBankUseCase } from "@/create-bank.usecase.ts";
-import { BankDAOFake } from "../__mocks__/fakes/bank.dao-fake.ts";
-import { BankRepositoryFake } from "../__mocks__/fakes/bank.repository-fake.ts";
+import { BankDAOFake } from "../__mocks__/bank.dao-fake.ts";
+import { BankRepositoryFake } from "../__mocks__/bank.repository-fake.ts";
 import type { BankDAO } from "@/bank.dao-database.ts";
 import type { BankRepository } from "@/bank.repository-database.ts";
 
