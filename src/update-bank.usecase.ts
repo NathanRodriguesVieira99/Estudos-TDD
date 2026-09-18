@@ -1,6 +1,6 @@
-import type { BankDAO } from "@/bank.dao-database.ts";
-
+import type { BankRepository } from "./bank.repository-database.ts";
 import type { UseCase } from "./useCase.ts";
+
 export namespace UpdateBank {
   export type Input = {
     id: number;
@@ -20,7 +20,7 @@ export class UpdateBankUseCase implements UseCase<
   UpdateBank.Input,
   UpdateBank.Output
 > {
-  constructor(private readonly bankDAO: BankDAO) {}
+  constructor(private readonly bankRepository: BankRepository) {}
 
   async execute(input: UpdateBank.Input): Promise<UpdateBank.Output> {
     if (!input.nome) throw new Error("Nome inválido");
@@ -30,35 +30,37 @@ export class UpdateBankUseCase implements UseCase<
     if (input.codigo.replace(/\D/g, "").length !== 3) {
       throw new Error("Código inválido");
     }
-    const row = await this.bankDAO.getById(input.id);
-    if (!row) throw new Error("Banco não encontrado");
-    if (row.codigo !== input.codigo) {
-      const alreadyExistsWithCode = await this.bankDAO.getByCode(input.codigo);
+    const bank = await this.bankRepository.findById(input.id);
+    if (!bank) throw new Error("Banco não encontrado");
+    if (bank.getCode() !== input.codigo) {
+      const alreadyExistsWithCode = await this.bankRepository.findByCode(
+        input.codigo,
+      );
       if (alreadyExistsWithCode) {
         throw new Error(
           "Não é possível alterar o banco para um código já cadastrado",
         );
       }
+      bank.setCode(input.codigo);
     }
-    if (row.nome !== input.nome) {
-      const alreadyExistsWithName = await this.bankDAO.getByName(input.nome);
+    if (bank.getName() !== input.nome) {
+      const alreadyExistsWithName = await this.bankRepository.findByName(
+        input.nome,
+      );
       if (alreadyExistsWithName) {
         throw new Error(
           "Não é possível alterar o banco para um nome já cadastrado",
         );
       }
+      bank?.setName(input.nome);
     }
-    const output = {
-      id: row?.banco_id,
-      codigo: row?.codigo,
-      nome: row?.nome,
-      url: row?.url,
+    bank.setUrl(input.url);
+    await this.bankRepository.update(bank);
+    return {
+      id: bank.getId(),
+      codigo: bank.getCode(),
+      nome: bank.getName(),
+      url: bank.getUrl(),
     };
-    const updatedBank = {
-      ...output,
-      ...input,
-    };
-    await this.bankDAO.update(updatedBank);
-    return updatedBank;
   }
 }
