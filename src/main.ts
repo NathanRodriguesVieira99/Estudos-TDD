@@ -17,7 +17,7 @@ const bankDAO = new BankDAODatabase();
 const bankRepository = new BankRepositoryDatabase();
 
 app.get("/banco", async (request: Request, response: Response) => {
-  const useCase = new GetBankListUseCase(bankDAO);
+  const useCase = new GetBankListUseCase(bankRepository);
   const output = await useCase.execute();
   response.status(200).json(output);
 });
@@ -63,7 +63,7 @@ app.put("/banco/:id", async (request: Request, response: Response) => {
 
 app.delete("/banco/:id", async (request: Request, response: Response) => {
   const bankId = Number(request.params.id);
-  const useCase = new RemoveBankUseCase(bankDAO);
+  const useCase = new RemoveBankUseCase(bankRepository);
   const input = {
     id: bankId,
   };

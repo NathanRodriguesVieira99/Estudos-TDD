@@ -1,6 +1,5 @@
-import type { BankDAO } from "@/bank.dao-database.ts";
-
 import type { UseCase } from "./useCase.ts";
+import type { BankRepository } from "./bank.repository-database.ts";
 
 export namespace GetBankList {
   export type Input = unknown;
@@ -16,15 +15,15 @@ export class GetBankListUseCase implements UseCase<
   GetBankList.Input,
   GetBankList.Output
 > {
-  constructor(private readonly bankDAO: BankDAO) {}
+  constructor(private readonly bankRepository: BankRepository) {}
 
   async execute(): Promise<GetBankList.Output> {
-    const rows = await this.bankDAO.list();
-    const output = rows.map((row) => ({
-      id: row.banco_id,
-      codigo: row.codigo,
-      nome: row.nome,
-      url: row.url,
+    const bankList = await this.bankRepository.list();
+    const output = bankList.map((bank) => ({
+      id: bank.getId(),
+      codigo: bank.getCode(),
+      nome: bank.getName(),
+      url: bank.getUrl(),
     }));
     return output;
   }
