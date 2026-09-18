@@ -1,6 +1,6 @@
 import { faker } from "@faker-js/faker";
 import { Bank } from "@/bank.ts";
-import { BankRepositoryFake } from "../mocks/fakes/bank.repository-fake.ts";
+import { BankRepositoryFake } from "../__mocks__/fakes/bank.repository-fake.ts";
 import { GetBankListUseCase } from "@/get-bank-list.usecase.ts";
 import type { BankRepository } from "@/bank.repository-database.ts";
 
