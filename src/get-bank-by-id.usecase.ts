@@ -1,5 +1,4 @@
-import type { BankDAO } from "@/bank.dao-database.ts";
-
+import type { BankRepository } from "./bank.repository-database.ts";
 import type { UseCase } from "./useCase.ts";
 
 export namespace GetBankById {
@@ -20,16 +19,16 @@ export class GetBankByIdUseCase implements UseCase<
   GetBankById.Input,
   GetBankById.Output
 > {
-  constructor(private readonly bankDAO: BankDAO) {}
+  constructor(private readonly bankRepository: BankRepository) {}
 
   async execute(input: GetBankById.Input): Promise<GetBankById.Output> {
-    const row = await this.bankDAO.getById(input.id);
-    if (!row) return undefined;
+    const bank = await this.bankRepository.findById(input.id);
+    if (!bank) return undefined;
     const output = {
-      id: row.banco_id,
-      codigo: row.codigo,
-      nome: row.nome,
-      url: row.url,
+      id: bank.getId(),
+      codigo: bank.getCode(),
+      nome: bank.getName(),
+      url: bank.getUrl(),
     };
     return output;
   }

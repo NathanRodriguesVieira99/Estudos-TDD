@@ -1,30 +1,29 @@
-import type { BankDAO } from "@/bank.dao-database.ts";
+import { faker } from "@faker-js/faker";
+import { Bank } from "@/bank.ts";
 import { GetBankByIdUseCase } from "@/get-bank-by-id.usecase.ts";
+import { BankRepositoryFake } from "../mocks/fakes/bank.repository-fake.ts";
+import type { BankRepository } from "@/bank.repository-database.ts";
 
-import { BankDAOFake } from "../mocks/fakes/bank.dao-fake.ts";
-
-let bankDAO: BankDAO;
+let bankRepository: BankRepository;
 let sut: GetBankByIdUseCase;
 
 beforeAll(() => {
-  bankDAO = new BankDAOFake();
-  sut = new GetBankByIdUseCase(bankDAO);
+  bankRepository = new BankRepositoryFake();
+  sut = new GetBankByIdUseCase(bankRepository);
 });
 
 test("Deve retornar um banco pelo ID", async () => {
-  const inputCreate = {
-    codigo: "559",
-    nome: "Banco Teste Find One",
-    url: "teste_find_one.com",
-  };
-  const bankId = await bankDAO.save(inputCreate);
-  const inputSut = {
-    id: bankId,
-  };
+  const code = faker.string.numeric(3);
+  const name = faker.person.fullName();
+  const url = faker.internet.url();
+  const instance = Bank.create({ code, name, url });
+  const savedBank = await bankRepository.save(instance);
+  const bankId = savedBank.getId();
+  const inputSut = { id: bankId };
   const output = await sut.execute(inputSut);
   expect(output?.id).toBe(bankId);
-  expect(output?.codigo).toBe(inputCreate.codigo);
-  expect(output?.nome).toBe(inputCreate.nome);
-  expect(output?.url).toBe(inputCreate.url);
-  await bankDAO.remove(bankId);
+  expect(output?.codigo).toBe(savedBank.getCode());
+  expect(output?.nome).toBe(savedBank.getName());
+  expect(output?.url).toBe(savedBank.getUrl());
+  await bankRepository.remove(bankId);
 });
