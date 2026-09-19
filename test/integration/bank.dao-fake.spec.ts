@@ -41,14 +41,14 @@ describe("Bank DAO Fake", () => {
   test("Deve retornar um banco pelo código", async () => {
     const bankId = await bankDAO.save({
       codigo: "123",
-      nome: "nome",
+      nome: "nome teste",
       url: "url.com",
     });
     const savedBank = await bankDAO.getByCode("123");
     expect(savedBank).toBeTruthy();
     expect(savedBank!.banco_id).toBe(bankId);
     expect(savedBank!.codigo).toBe("123");
-    expect(savedBank!.nome).toBe("nome");
+    expect(savedBank!.nome).toBe("nome teste");
     expect(savedBank!.url).toBe("url.com");
   });
   test("Deve retornar um banco pelo nome", async () => {

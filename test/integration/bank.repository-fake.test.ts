@@ -1,6 +1,7 @@
 import { Bank } from "@/bank.ts";
 import { BankRepositoryFake } from "../__mocks__/bank.repository-fake.ts";
 import type { BankRepository } from "@/bank.repository-database.ts";
+import { faker } from "@faker-js/faker";
 
 let sut: BankRepository;
 
@@ -10,7 +11,7 @@ beforeEach(() => {
 
 describe("Bank Repository Fake", () => {
   test("Deve testar o acesso ao banco", async () => {
-    const name = "nome";
+    const name = faker.person.fullName();
     const code = "123";
     const url = "url";
     const bank = Bank.create({
@@ -40,7 +41,7 @@ describe("Bank Repository Fake", () => {
   });
   test("Deve retornar um banco pelo código", async () => {
     const code = "123";
-    const name = "nome";
+    const name = faker.person.fullName();
     const url = "url.com";
     const instance = Bank.create({ name, code, url });
     const savedBank = await sut.save(instance);
@@ -54,7 +55,7 @@ describe("Bank Repository Fake", () => {
   });
   test("Deve retornar um banco pelo nome", async () => {
     const code = "123";
-    const name = "nome";
+    const name = faker.person.fullName();
     const url = "url.com";
     const instance = Bank.create({ name, code, url });
     const savedBank = await sut.save(instance);

@@ -17,16 +17,22 @@ afterAll(() => {
 
 describe("Bank DAO Database", () => {
   test("Deve testar o acesso ao banco", async () => {
+    const code = faker.string.numeric(3);
+    const name = faker.person.fullName();
+    await connection.query(`DELETE FROM banco WHERE codigo = ? AND nome = ?`, [
+      code,
+      name,
+    ]);
     const bankId = await bankDAO.save({
-      codigo: "123",
-      nome: "nome",
+      codigo: code,
+      nome: name,
       url: "url",
     });
     const listBank = await bankDAO.list();
     const exists = listBank.find((bank) => bank.banco_id === bankId);
     expect(exists).toBeTruthy();
-    expect(exists?.codigo).toBe("123");
-    expect(exists?.nome).toBe("nome");
+    expect(exists?.codigo).toBe(code);
+    expect(exists?.nome).toBe(name);
     expect(exists?.url).toBe("url");
     await bankDAO.update({
       id: bankId,
@@ -44,18 +50,22 @@ describe("Bank DAO Database", () => {
     expect(bankData).toBeFalsy();
   });
   test("Deve retornar um banco pelo código", async () => {
-    const fakeCode = faker.string.numeric(3);
-    await connection.query(`DELETE FROM banco WHERE codigo = ?`, [fakeCode]);
+    const code = faker.string.numeric(3);
+    const name = faker.person.fullName();
+    await connection.query(`DELETE FROM banco WHERE codigo = ? AND nome = ?`, [
+      code,
+      name,
+    ]);
     const bankId = await bankDAO.save({
-      codigo: fakeCode,
-      nome: "nome",
+      codigo: code,
+      nome: name,
       url: "url.com",
     });
-    const savedBank = await bankDAO.getByCode(fakeCode);
+    const savedBank = await bankDAO.getByCode(code);
     expect(savedBank).toBeTruthy();
     expect(savedBank!.banco_id).toBe(bankId);
-    expect(savedBank!.codigo).toBe(fakeCode);
-    expect(savedBank!.nome).toBe("nome");
+    expect(savedBank!.codigo).toBe(code);
+    expect(savedBank!.nome).toBe(name);
     expect(savedBank!.url).toBe("url.com");
   });
   test("Deve lançar um erro se o bankId não for um número ao remover um banco", async () => {
