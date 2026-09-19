@@ -41,4 +41,20 @@ describe("Bank", () => {
     expect(instance.getCode()).toBe(updatedCode);
     expect(instance.getUrl()).toBe(updatedUrl);
   });
+  it("não deve criar um banco com nome inválido", () => {
+    const invalidName = "";
+    const code = "009";
+    const url = "url.com";
+    expect(() => Bank.create({ name: invalidName, code, url })).toThrow(
+      "Nome inválido",
+    );
+  });
+  it("não deve criar um banco com código inválido", () => {
+    const name = "Nome Teste";
+    const invalidCode = "";
+    const url = "url.com";
+    expect(() => Bank.create({ name, code: invalidCode, url })).toThrow(
+      "Código inválido",
+    );
+  });
 });
