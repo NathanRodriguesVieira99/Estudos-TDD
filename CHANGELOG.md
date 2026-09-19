@@ -1,3 +1,10 @@
+## [0.8.0](https://github.com/NathanRodriguesVieira99/Estudos-TDD/compare/v0.7.1...v0.8.0) (2026-09-19)
+
+
+### Features
+
+* **bank:** add validation to domain Bank entity ([b30bfde](https://github.com/NathanRodriguesVieira99/Estudos-TDD/commit/b30bfded245d8186a6404a56a32291ee214577b0))
+
 ## [0.7.1](https://github.com/NathanRodriguesVieira99/Estudos-TDD/compare/v0.7.0...v0.7.1) (2026-09-18)
 
 ## [0.7.0](https://github.com/NathanRodriguesVieira99/Estudos-TDD/compare/v0.6.2...v0.7.0) (2026-09-18)
@@ -16,12 +23,4 @@
 ### Bug Fixes
 
 * **bank:** change db table and column names from UPPER CASE to lower case to avoid fs problens on OS ([a591a93](https://github.com/NathanRodriguesVieira99/Estudos-TDD/commit/a591a93c4a80aed25e64f63e59731c1c268f624f))
-
-## [0.6.0](https://github.com/NathanRodriguesVieira99/Estudos-TDD/compare/v0.5.0...v0.6.0) (2026-09-11)
-
-
-### Features
-
-* **bank:** garanteed is not possible to update bank with duplicated code ([536b70d](https://github.com/NathanRodriguesVieira99/Estudos-TDD/commit/536b70dd5edd918b9e2325aa0d1b26b88ee09a91))
-* **bank:** garanteed is not possible to update bank with duplicated name ([8af4d74](https://github.com/NathanRodriguesVieira99/Estudos-TDD/commit/8af4d74148ab97009be3aa640a179c0a9d3a136e))
 
