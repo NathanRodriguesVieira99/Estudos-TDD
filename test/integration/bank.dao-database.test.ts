@@ -1,4 +1,4 @@
-import { faker } from "@faker-js/faker";
+import { faker, ur } from "@faker-js/faker";
 import mysqlConnection from "mysql2/promise";
 
 import { BankDAODatabase } from "@/bank.dao-database.ts";
@@ -52,6 +52,7 @@ describe("Bank DAO Database", () => {
   test("Deve retornar um banco pelo código", async () => {
     const code = faker.string.numeric(3);
     const name = faker.person.fullName();
+    const url = faker.internet.url()
     await connection.query(`DELETE FROM banco WHERE codigo = ? AND nome = ?`, [
       code,
       name,
@@ -59,14 +60,14 @@ describe("Bank DAO Database", () => {
     const bankId = await bankDAO.save({
       codigo: code,
       nome: name,
-      url: "url.com",
+      url,
     });
     const savedBank = await bankDAO.getByCode(code);
     expect(savedBank).toBeTruthy();
     expect(savedBank!.banco_id).toBe(bankId);
     expect(savedBank!.codigo).toBe(code);
     expect(savedBank!.nome).toBe(name);
-    expect(savedBank!.url).toBe("url.com");
+    expect(savedBank!.url).toBe(url);
   });
   test("Deve lançar um erro se o bankId não for um número ao remover um banco", async () => {
     await expect(bankDAO.remove("NaN" as any)).rejects.toThrow(

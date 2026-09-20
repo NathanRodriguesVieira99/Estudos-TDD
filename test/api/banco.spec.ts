@@ -186,9 +186,23 @@ describe("PUT /banco/:id", () => {
   test.each([""])(
     "Não deve alterar um banco com nome inválido %s",
     async (invalidName: any) => {
-      const bankId = 9_999_999;
+      const fakeCode = faker.string.numeric(3);
+      const fakeCodeUpdate = faker.string.numeric(3);
+      const fakeName = faker.person.fullName();
+      await connection.query(`DELETE FROM banco WHERE codigo = ? OR nome = ?`, [
+        fakeCode,
+        fakeName,
+      ]);
+      const inputCreate = {
+        codigo: fakeCode,
+        nome: fakeName,
+        url: "teste.com",
+      };
+      const responseCreate = await axios.post(`${baseUrl}/banco`, inputCreate);
+      const outputCreate = responseCreate.data;
+      const bankId = outputCreate.id;
       const inputUpdate = {
-        codigo: "777",
+        codigo: fakeCodeUpdate,
         nome: invalidName,
         url: "teste2.com",
       };
