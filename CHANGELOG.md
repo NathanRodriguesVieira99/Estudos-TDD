@@ -1,3 +1,10 @@
+## [0.9.0](https://github.com/NathanRodriguesVieira99/Estudos-TDD/compare/v0.8.0...v0.9.0) (2026-09-20)
+
+
+### Features
+
+* **bank:** garanteed Bank to evolue only in valid state ([7624b8c](https://github.com/NathanRodriguesVieira99/Estudos-TDD/commit/7624b8c1e15bb2d83dfc66abfb506aaaa313882d))
+
 ## [0.8.0](https://github.com/NathanRodriguesVieira99/Estudos-TDD/compare/v0.7.1...v0.8.0) (2026-09-19)
 
 
@@ -16,11 +23,4 @@
 * **bank:** add bank repository ([3ebc565](https://github.com/NathanRodriguesVieira99/Estudos-TDD/commit/3ebc565024a8d26f0d91e2f37f61fc44ba3f923c))
 
 ## [0.6.2](https://github.com/NathanRodriguesVieira99/Estudos-TDD/compare/v0.6.1...v0.6.2) (2026-09-15)
-
-## [0.6.1](https://github.com/NathanRodriguesVieira99/Estudos-TDD/compare/v0.6.0...v0.6.1) (2026-09-12)
-
-
-### Bug Fixes
-
-* **bank:** change db table and column names from UPPER CASE to lower case to avoid fs problens on OS ([a591a93](https://github.com/NathanRodriguesVieira99/Estudos-TDD/commit/a591a93c4a80aed25e64f63e59731c1c268f624f))
 
