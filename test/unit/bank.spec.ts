@@ -1,4 +1,5 @@
 import { Bank } from "@/bank.ts";
+import { DomainError } from "@/domain-error.ts";
 
 describe("Bank", () => {
   test("deve criar um Banco", () => {
@@ -46,7 +47,7 @@ describe("Bank", () => {
     const code = "009";
     const url = "url.com";
     expect(() => Bank.create({ name: invalidName, code, url })).toThrow(
-      "Nome inválido",
+      new DomainError("Nome inválido"),
     );
   });
   test("não deve criar um banco com código inválido", () => {
@@ -54,7 +55,7 @@ describe("Bank", () => {
     const invalidCode = "";
     const url = "url.com";
     expect(() => Bank.create({ name, code: invalidCode, url })).toThrow(
-      "Código inválido",
+      new DomainError("Código inválido"),
     );
   });
   test("não deve alterar o nome se ele for inválido", () => {
@@ -67,7 +68,9 @@ describe("Bank", () => {
       url,
     });
     const invalidName = "";
-    expect(() => instance.changeName(invalidName)).toThrow("Nome inválido");
+    expect(() => instance.changeName(invalidName)).toThrow(
+      new DomainError("Nome inválido"),
+    );
   });
   test("não deve alterar o código se ele for inválido", () => {
     const name = "Nome Teste";
@@ -75,6 +78,8 @@ describe("Bank", () => {
     const url = "url.com";
     const instance = Bank.create({ name, code, url });
     const invalidCode = "";
-    expect(() => instance.changeCode(invalidCode)).toThrow("Código inválido");
+    expect(() => instance.changeCode(invalidCode)).toThrow(
+      new DomainError("Código inválido"),
+    );
   });
 });

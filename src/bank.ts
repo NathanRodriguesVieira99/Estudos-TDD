@@ -11,6 +11,7 @@
 
 import { validateBankCode } from "./validate-bank-code.ts";
 import { validateBankName } from "./validate-bank-name.ts";
+import { DomainError } from "./domain-error.ts";
 
 export namespace Bank {
   export type CreateParams = {
@@ -33,8 +34,8 @@ export class Bank {
     private code: string,
     private url: string,
   ) {
-    if (!validateBankName(name)) throw new Error("Nome inválido");
-    if (!validateBankCode(code)) throw new Error("Código inválido");
+    if (!validateBankName(name)) throw new DomainError("Nome inválido");
+    if (!validateBankCode(code)) throw new DomainError("Código inválido");
   }
 
   /*
@@ -67,12 +68,12 @@ export class Bank {
   }
 
   changeName(name: string): void {
-    if (!validateBankName(name)) throw new Error("Nome inválido");
+    if (!validateBankName(name)) throw new DomainError("Nome inválido");
     this.name = name;
   }
 
   changeCode(code: string): void {
-    if (!validateBankCode(code)) throw new Error("Código inválido");
+    if (!validateBankCode(code)) throw new DomainError("Código inválido");
     this.code = code;
   }
 
