@@ -24,9 +24,12 @@ app.get("/banco/:id", async (request: Request, response: Response) => {
   const bankId = Number(request.params.id);
   const input = { id: bankId };
   const useCase = new GetBankByIdUseCase(bankRepository);
-  const output = await useCase.execute(input);
-  if (!output) return response.status(404).end();
-  response.status(200).json(output);
+  try {
+    const output = await useCase.execute(input);
+    response.status(200).json(output);
+  } catch (error: any) {
+    return response.status(404).end();
+  }
 });
 
 app.post("/banco", async (request: Request, response: Response) => {

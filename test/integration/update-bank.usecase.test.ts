@@ -2,6 +2,7 @@ import { faker } from "@faker-js/faker";
 import { Bank } from "@/bank.ts";
 import { UpdateBankUseCase } from "@/update-bank.usecase.ts";
 import { BankRepositoryFake } from "../__mocks__/bank.repository-fake.ts";
+import { ApplicationError } from "@/application-error.ts";
 import type { BankRepository } from "@/bank.repository-database.ts";
 
 let bankRepository: BankRepository;
@@ -105,7 +106,9 @@ describe("UpdateBank UseCase", () => {
       url: "teste2.com",
     };
     await expect(sut.execute(inputUpdate)).rejects.toThrow(
-      "Não é possível alterar o banco para um código já cadastrado",
+      new ApplicationError(
+        "Não é possível alterar o banco para um código já cadastrado",
+      ),
     );
     await bankRepository.remove(firstBankId);
     await bankRepository.remove(secondBankId);
@@ -131,7 +134,9 @@ describe("UpdateBank UseCase", () => {
       url: "teste4.changed.com",
     };
     await expect(sut.execute(inputUpdate)).rejects.toThrow(
-      "Não é possível alterar o banco para um nome já cadastrado",
+      new ApplicationError(
+        "Não é possível alterar o banco para um nome já cadastrado",
+      ),
     );
     await bankRepository.remove(firstBankId);
     await bankRepository.remove(secondBankId);

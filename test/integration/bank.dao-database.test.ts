@@ -52,11 +52,11 @@ describe("Bank DAO Database", () => {
   test("Deve retornar um banco pelo código", async () => {
     const code = faker.string.numeric(3);
     const name = faker.person.fullName();
-    const url = faker.internet.url()
-    await connection.query(`DELETE FROM banco WHERE codigo = ? AND nome = ?`, [
-      code,
-      name,
-    ]);
+    const url = faker.internet.url();
+    await connection.query(
+      `DELETE FROM banco WHERE codigo = ? AND nome = ? AND url = ?`,
+      [code, name, url],
+    );
     const bankId = await bankDAO.save({
       codigo: code,
       nome: name,

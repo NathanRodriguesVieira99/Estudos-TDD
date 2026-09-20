@@ -1,4 +1,5 @@
 import { Bank } from "./bank.ts";
+import { ApplicationError } from "./application-error.ts";
 import type { UseCase } from "./useCase.ts";
 import type { BankRepository } from "./bank.repository-database.ts";
 
@@ -32,13 +33,13 @@ export class CreateBankUseCase implements UseCase<
       input.codigo,
     );
     if (alreadyExistsWithCode) {
-      throw new Error("Já existe um banco com este código");
+      throw new ApplicationError("Já existe um banco com este código");
     }
     const alreadyExistsWithName = await this.bankRepository.findByName(
       input.nome,
     );
     if (alreadyExistsWithName) {
-      throw new Error("Já existe um banco com este nome");
+      throw new ApplicationError("Já existe um banco com este nome");
     }
     const savedBank = await this.bankRepository.save(bank);
     const output = {

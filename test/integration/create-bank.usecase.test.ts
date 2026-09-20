@@ -4,6 +4,7 @@ import { BankDAOFake } from "../__mocks__/bank.dao-fake.ts";
 import { BankRepositoryFake } from "../__mocks__/bank.repository-fake.ts";
 import type { BankDAO } from "@/bank.dao-database.ts";
 import type { BankRepository } from "@/bank.repository-database.ts";
+import { ApplicationError } from "@/application-error.ts";
 
 let bankDAO: BankDAO;
 let bankRepository: BankRepository;
@@ -62,7 +63,7 @@ describe("CreateBank UseCase", () => {
     };
     const { id } = await sut.execute(inputCreate);
     await expect(sut.execute(inputCreate)).rejects.toThrow(
-      "Já existe um banco com este código",
+      new ApplicationError("Já existe um banco com este código"),
     );
     await bankDAO.remove(id);
   });
@@ -80,7 +81,7 @@ describe("CreateBank UseCase", () => {
       url: firstInputCreate.url,
     };
     await expect(sut.execute(secondInputCreate)).rejects.toThrow(
-      "Já existe um banco com este nome",
+      new ApplicationError("Já existe um banco com este nome"),
     );
     await bankDAO.remove(id);
   });
