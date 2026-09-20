@@ -1,7 +1,7 @@
 import { Bank } from "@/bank.ts";
 
 describe("Bank", () => {
-  it("deve criar um Banco", () => {
+  test("deve criar um Banco", () => {
     const name = "Teste Banco Name";
     const code = "009";
     const url = "url.com";
@@ -12,7 +12,7 @@ describe("Bank", () => {
     expect(instance.getCode()).toBe(code);
     expect(instance.getUrl()).toBe(url);
   });
-  it("deve restaurar um Banco", () => {
+  test("deve restaurar um Banco", () => {
     const id = 0;
     const name = "Teste Banco Name";
     const code = "009";
@@ -24,7 +24,7 @@ describe("Bank", () => {
     expect(instance.getCode()).toBe(code);
     expect(instance.getUrl()).toBe(url);
   });
-  it("deve alterar propriedades do Banco", () => {
+  test("deve alterar propriedades do Banco", () => {
     const id = 9;
     const name = "Teste Banco Name";
     const code = "009";
@@ -33,15 +33,15 @@ describe("Bank", () => {
     const updatedCode = "019";
     const updatedUrl = "url.updated.com";
     const instance = Bank.restore({ id, name, code, url });
-    instance.setName(updatedName);
-    instance.setCode(updatedCode);
+    instance.changeName(updatedName);
+    instance.changeCode(updatedCode);
     instance.setUrl(updatedUrl);
     expect(instance).toBeTruthy();
     expect(instance.getName()).toBe(updatedName);
     expect(instance.getCode()).toBe(updatedCode);
     expect(instance.getUrl()).toBe(updatedUrl);
   });
-  it("não deve criar um banco com nome inválido", () => {
+  test("não deve criar um banco com nome inválido", () => {
     const invalidName = "";
     const code = "009";
     const url = "url.com";
@@ -49,12 +49,32 @@ describe("Bank", () => {
       "Nome inválido",
     );
   });
-  it("não deve criar um banco com código inválido", () => {
+  test("não deve criar um banco com código inválido", () => {
     const name = "Nome Teste";
     const invalidCode = "";
     const url = "url.com";
     expect(() => Bank.create({ name, code: invalidCode, url })).toThrow(
       "Código inválido",
     );
+  });
+  test("não deve alterar o nome se ele for inválido", () => {
+    const name = "Nome Teste";
+    const code = "556";
+    const url = "url.com";
+    const instance = Bank.create({
+      name,
+      code,
+      url,
+    });
+    const invalidName = "";
+    expect(() => instance.changeName(invalidName)).toThrow("Nome inválido");
+  });
+  test("não deve alterar o código se ele for inválido", () => {
+    const name = "Nome Teste";
+    const code = "567";
+    const url = "url.com";
+    const instance = Bank.create({ name, code, url });
+    const invalidCode = "";
+    expect(() => instance.changeCode(invalidCode)).toThrow("Código inválido");
   });
 });

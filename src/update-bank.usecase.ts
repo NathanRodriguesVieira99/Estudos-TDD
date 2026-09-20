@@ -38,7 +38,7 @@ export class UpdateBankUseCase implements UseCase<
           "Não é possível alterar o banco para um código já cadastrado",
         );
       }
-      bank.setCode(input.codigo);
+      bank.changeCode(input.codigo);
     }
     if (bank.getName() !== input.nome) {
       const alreadyExistsWithName = await this.bankRepository.findByName(
@@ -49,7 +49,7 @@ export class UpdateBankUseCase implements UseCase<
           "Não é possível alterar o banco para um nome já cadastrado",
         );
       }
-      bank?.setName(input.nome);
+      bank?.changeName(input.nome);
     }
     bank.setUrl(input.url);
     await this.bankRepository.update(bank);

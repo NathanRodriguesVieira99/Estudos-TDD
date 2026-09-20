@@ -36,8 +36,8 @@ describe("Bank Repository Database", () => {
     expect(exists?.getName()).toBe(name);
     expect(exists?.getCode()).toBe(code);
     expect(exists?.getUrl()).toBe(url);
-    savedBank.setName("nome alterado");
-    savedBank.setCode("321");
+    savedBank.changeName("nome alterado");
+    savedBank.changeCode("321");
     savedBank.setUrl("url.alterada.com");
     await sut.update(savedBank);
     const updatedBank = await sut.findById(savedBank.getId());
