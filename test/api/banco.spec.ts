@@ -68,6 +68,13 @@ describe("GET /banco/:id", () => {
     expect(output.url).toBe(inputCreate.url);
     await axios.delete(`${baseUrl}/banco/${bankId}`);
   });
+  test("Deve retornar 404 ao não encontrar um banco", async () => {
+    const responseGet = await axios.get(`${baseUrl}/banco/${989_989}`);
+    expect(responseGet.status).toBe(404);
+    const outputGet = responseGet.data;
+    expect(outputGet.code).toBe("NOT_FOUND_ERROR");
+    expect(outputGet.message).toBe("Banco não encontrado");
+  });
 });
 describe("POST /banco", () => {
   test("Deve criar um banco", async () => {
@@ -125,6 +132,7 @@ describe("POST /banco", () => {
       const responseCreate = await axios.post(`${baseUrl}/banco`, inputCreate);
       expect(responseCreate.status).toBe(422);
       const outputCreate = responseCreate.data;
+      expect(outputCreate.code).toBe("DOMAIN_ERROR");
       expect(outputCreate.message).toBe("Nome inválido");
     },
   );
@@ -139,6 +147,7 @@ describe("POST /banco", () => {
       const responseCreate = await axios.post(`${baseUrl}/banco`, inputCreate);
       expect(responseCreate.status).toBe(422);
       const outputCreate = responseCreate.data;
+      expect(outputCreate.code).toBe("DOMAIN_ERROR");
       expect(outputCreate.message).toBe("Código inválido");
     },
   );
@@ -212,6 +221,7 @@ describe("PUT /banco/:id", () => {
       );
       expect(responseUpdate.status).toBe(422);
       const outputUpdate = responseUpdate.data;
+      expect(outputUpdate.code).toBe("DOMAIN_ERROR");
       expect(outputUpdate.message).toBe("Nome inválido");
     },
   );
@@ -238,6 +248,7 @@ describe("PUT /banco/:id", () => {
       );
       expect(responseUpdate.status).toBe(422);
       const outputUpdate = responseUpdate.data;
+      expect(outputUpdate.code).toBe("DOMAIN_ERROR");
       expect(outputUpdate.message).toBe("Código inválido");
       await axios.delete(`${baseUrl}/banco/${outputCreate.id}`);
     },
@@ -255,6 +266,7 @@ describe("PUT /banco/:id", () => {
     );
     expect(responseUpdate.status).toBe(404);
     const outputUpdate = responseUpdate.data;
+    expect(outputUpdate.code).toBe("NOT_FOUND_ERROR");
     expect(outputUpdate.message).toBe("Banco não encontrado");
   });
 });
@@ -280,5 +292,11 @@ describe("DELETE /banco/:id", () => {
     const responseGet = await axios.get(`${baseUrl}/banco/${bankId}`);
     expect(responseGet.status).toBe(404);
     expect(responseGet.data?.id).toBeFalsy();
+  });
+  test("Não deve deletar um banco se não for passado o ID válido", async () => {
+    const responseDelete = await axios.delete(`${baseUrl}/banco/abc`);
+    expect(responseDelete.status).toBe(422);
+    expect(responseDelete.data?.code).toBe("APPLICATION_ERROR");
+    expect(responseDelete.data?.message).toBe("ID do banco inválido");
   });
 });

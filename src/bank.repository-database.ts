@@ -1,6 +1,6 @@
 import { Bank } from "@/bank.ts";
 import mysqlConnection from "mysql2/promise";
-
+import { ApplicationError } from "./application-error.ts";
 
 /*
  * Repositories são para persistência de objetos de domain (entidades de domínio), devem retornar entidades completas
@@ -55,7 +55,7 @@ export class BankRepositoryDatabase implements BankRepository {
   }
 
   async remove(bankId: number): Promise<void> {
-    if (isNaN(bankId)) throw new Error("ID do Banco informado é inválido");
+    if (isNaN(bankId)) throw new ApplicationError("ID do banco inválido");
     const connection = mysqlConnection.createPool(
       String(process.env.DATABASE_URL),
     );

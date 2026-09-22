@@ -3,6 +3,7 @@ import { Bank } from "@/bank.ts";
 import { UpdateBankUseCase } from "@/update-bank.usecase.ts";
 import { BankRepositoryFake } from "../__mocks__/bank.repository-fake.ts";
 import { ApplicationError } from "@/application-error.ts";
+import { NotFoundError } from "@/not-found.error.ts";
 import type { BankRepository } from "@/bank.repository-database.ts";
 
 let bankRepository: BankRepository;
@@ -140,5 +141,19 @@ describe("UpdateBank UseCase", () => {
     );
     await bankRepository.remove(firstBankId);
     await bankRepository.remove(secondBankId);
+  });
+  test("Não deve alterar um banco inexistente", async () => {
+    const code = faker.string.numeric(3);
+    const name = faker.person.fullName();
+    const url = faker.internet.url();
+    const inputUpdate = {
+      id: 999_998_000,
+      codigo: code,
+      nome: name,
+      url,
+    };
+    await expect(sut.execute(inputUpdate)).rejects.toThrow(
+      new NotFoundError("Banco não encontrado"),
+    );
   });
 });

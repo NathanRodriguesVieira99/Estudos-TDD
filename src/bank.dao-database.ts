@@ -1,4 +1,5 @@
 import mysqlConnection from "mysql2/promise";
+import { ApplicationError } from "./application-error.ts";
 
 /*
  * DAO abstrai uma tabela do banco de dados de forma 1:1 e trafega/manipula apanas DTOs.
@@ -58,7 +59,8 @@ export class BankDAODatabase implements BankDAO {
   }
 
   async remove(bankId: number): Promise<void> {
-    if (isNaN(bankId)) throw new Error("ID do Banco informado é inválido");
+    if (isNaN(bankId))
+      throw new ApplicationError("ID do Banco informado é inválido");
     const connection = mysqlConnection.createPool(
       String(process.env.DATABASE_URL),
     );

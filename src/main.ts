@@ -6,6 +6,9 @@ import { GetBankByIdUseCase } from "./get-bank-by-id.usecase.ts";
 import { GetBankListUseCase } from "./get-bank-list.usecase.ts";
 import { RemoveBankUseCase } from "./remove-bank.usecase.ts";
 import { UpdateBankUseCase } from "./update-bank.usecase.ts";
+import { NotFoundError } from "./not-found.error.ts";
+import { DomainError } from "./domain-error.ts";
+import { ApplicationError } from "./application-error.ts";
 
 const app = express();
 
@@ -17,7 +20,14 @@ const bankRepository = new BankRepositoryDatabase();
 app.get("/banco", async (request: Request, response: Response) => {
   const useCase = new GetBankListUseCase(bankRepository);
   const output = await useCase.execute();
-  response.status(200).json(output);
+  try {
+    return response.status(200).json(output);
+  } catch (e: any) {
+    return response.status(500).json({
+      code: "SERVER_ERROR",
+      message: "Internal server error",
+    });
+  }
 });
 
 app.get("/banco/:id", async (request: Request, response: Response) => {
@@ -27,8 +37,17 @@ app.get("/banco/:id", async (request: Request, response: Response) => {
   try {
     const output = await useCase.execute(input);
     response.status(200).json(output);
-  } catch (error: any) {
-    return response.status(404).end();
+  } catch (e: any) {
+    if (e instanceof NotFoundError)
+      return response.status(404).json({
+        code: e.code,
+        message: e.message,
+      });
+    console.log(e);
+    return response.status(500).json({
+      code: "SERVER_ERROR",
+      message: "Internal Server Error",
+    });
   }
 });
 
@@ -38,8 +57,17 @@ app.post("/banco", async (request: Request, response: Response) => {
   try {
     const output = await useCase.execute(input);
     return response.status(201).json(output);
-  } catch (error: any) {
-    return response.status(422).json({ message: error?.message });
+  } catch (e: any) {
+    if (e instanceof DomainError) {
+      return response.status(422).json({
+        code: e.code,
+        message: e?.message,
+      });
+    }
+    return response.status(500).json({
+      code: "SERVER_ERROR",
+      message: "Internal server error",
+    });
   }
 });
 
@@ -54,11 +82,23 @@ app.put("/banco/:id", async (request: Request, response: Response) => {
   try {
     const output = await useCase.execute(input);
     return response.status(200).json(output);
-  } catch (error: any) {
-    if (error?.message === "Banco não encontrado") {
-      return response.status(404).json({ message: error?.message });
+  } catch (e: any) {
+    if (e instanceof NotFoundError) {
+      return response.status(404).json({
+        code: e.code,
+        message: e?.message,
+      });
     }
-    return response.status(422).json({ message: error?.message });
+    if (e instanceof DomainError) {
+      return response.status(422).json({
+        code: e.code,
+        message: e?.message,
+      });
+    }
+    return response.status(500).json({
+      code: "SERVER_ERROR",
+      message: "Internal server error",
+    });
   }
 });
 
@@ -71,8 +111,17 @@ app.delete("/banco/:id", async (request: Request, response: Response) => {
   try {
     await useCase.execute(input);
     return response.status(200).end();
-  } catch (error: any) {
-    response.status(422).json({ message: error?.message });
+  } catch (e: any) {
+    if (e instanceof ApplicationError) {
+      return response.status(422).json({
+        code: e.code,
+        message: e?.message,
+      });
+    }
+    return response.status(500).json({
+      code: "SERVER_ERROR",
+      message: "Internal server error",
+    });
   }
 });
 

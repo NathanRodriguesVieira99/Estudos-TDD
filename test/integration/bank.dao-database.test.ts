@@ -2,6 +2,7 @@ import { faker, ur } from "@faker-js/faker";
 import mysqlConnection from "mysql2/promise";
 
 import { BankDAODatabase } from "@/bank.dao-database.ts";
+import { ApplicationError } from "@/application-error.ts";
 
 let bankDAO: BankDAODatabase;
 
@@ -71,7 +72,7 @@ describe("Bank DAO Database", () => {
   });
   test("Deve lançar um erro se o bankId não for um número ao remover um banco", async () => {
     await expect(bankDAO.remove("NaN" as any)).rejects.toThrow(
-      "ID do Banco informado é inválido",
+      new ApplicationError("ID do Banco informado é inválido"),
     );
   });
   test("Deve retornar um banco pelo nome", async () => {

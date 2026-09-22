@@ -5,6 +5,7 @@ import {
   type BankRepository,
   BankRepositoryDatabase,
 } from "@/bank.repository-database.ts";
+import { ApplicationError } from "@/application-error.ts";
 
 const connection = mysqlConnection.createPool(String(process.env.DATABASE_URL));
 
@@ -69,7 +70,7 @@ describe("Bank Repository Database", () => {
   });
   test("Deve lançar um erro se o bankId não for um número ao remover um banco", async () => {
     await expect(sut.remove("NaN" as any)).rejects.toThrow(
-      "ID do Banco informado é inválido",
+      new ApplicationError("ID do banco inválido"),
     );
   });
   test("Deve retornar um banco pelo nome", async () => {

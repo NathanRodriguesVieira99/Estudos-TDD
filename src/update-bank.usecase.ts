@@ -1,4 +1,5 @@
 import { ApplicationError } from "./application-error.ts";
+import { NotFoundError } from "./not-found.error.ts";
 import type { BankRepository } from "./bank.repository-database.ts";
 import type { UseCase } from "./useCase.ts";
 
@@ -25,7 +26,7 @@ export class UpdateBankUseCase implements UseCase<
 
   async execute(input: UpdateBank.Input): Promise<UpdateBank.Output> {
     const bank = await this.bankRepository.findById(input.id);
-    if (!bank) throw new Error("Banco não encontrado");
+    if (!bank) throw new NotFoundError("Banco não encontrado");
     if (bank.getCode() !== input.codigo) {
       const alreadyExistsWithCode = await this.bankRepository.findByCode(
         input.codigo,
