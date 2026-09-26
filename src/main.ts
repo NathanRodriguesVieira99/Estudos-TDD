@@ -9,13 +9,32 @@ import { UpdateBankUseCase } from "./update-bank.usecase.ts";
 import { NotFoundError } from "./not-found.error.ts";
 import { DomainError } from "./domain-error.ts";
 import { ApplicationError } from "./application-error.ts";
+import { MySQLAdapter } from "./mysql.adapter.ts";
+
+/*
+ * Composition Root (geralmente o main.ts) é o único ponto da aplicacao onde todas as dependencias são reunidas, instanciadas e injetadas.
+ * Serve como um ponto único de entrada que centraliza a injeção de dependencias, assim, desacoplando e isolando o restante do código.
+ */
+
+/*
+ * Dependency Rule: As dependencias do código só podem apontar para dentro.
+ * As camadas mais externas (Banco de dados por exemplo) conhecem as camadas internas (Entities e UseCases), mas as internas nunca conhecem as externas.
+ */
 
 const app = express();
 
 app.use(express.json());
 app.use(cors());
 
-const bankRepository = new BankRepositoryDatabase();
+/*
+ * DIP (Dependency Inversion Principle)
+ * Os módulos de alto nível (Domain e Application) não devem depender de módulos de baixo nível (Interface Adapters e Frameworks & Drivers), ambos devem depender de abstrações (interfaces).
+ * Os módulos de alto nível por meio das interfaces (portas/contratos) obrigam os módulos de baixo nível a se adaptarem a eles.
+ */
+
+//*   instancia            injeção de dependência
+const databaseConnection = new MySQLAdapter(String(process.env.DATABASE_URL));
+const bankRepository = new BankRepositoryDatabase(databaseConnection);
 
 app.get("/banco", async (request: Request, response: Response) => {
   const useCase = new GetBankListUseCase(bankRepository);

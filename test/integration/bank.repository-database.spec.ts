@@ -1,22 +1,23 @@
-import mysqlConnection from "mysql2/promise";
 import { faker } from "@faker-js/faker";
+import { MySQLAdapter } from "@/mysql.adapter.ts";
 import { Bank } from "@/bank.ts";
 import {
   type BankRepository,
   BankRepositoryDatabase,
 } from "@/bank.repository-database.ts";
 import { ApplicationError } from "@/application-error.ts";
+import type { DatabaseConnection } from "@/database-connection.ts";
 
-const connection = mysqlConnection.createPool(String(process.env.DATABASE_URL));
-
+let databaseConnection: DatabaseConnection;
 let sut: BankRepository;
 
 beforeEach(() => {
-  sut = new BankRepositoryDatabase();
+  databaseConnection = new MySQLAdapter(String(process.env.DATABASE_URL));
+  sut = new BankRepositoryDatabase(databaseConnection);
 });
 
-afterEach(() => {
-  connection.pool.end();
+afterEach(async () => {
+  await databaseConnection.close();
 });
 
 describe("Bank Repository Database", () => {
@@ -54,6 +55,10 @@ describe("Bank Repository Database", () => {
     const code = faker.string.numeric(3);
     const name = faker.person.fullName();
     const url = faker.internet.url();
+    await databaseConnection.query(
+      `DELETE FROM banco WHERE codigo = ? AND nome = ?`,
+      [code, name],
+    );
     const instance = Bank.create({
       name,
       code,
